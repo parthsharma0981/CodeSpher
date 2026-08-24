@@ -3,3 +3,12 @@ dist/
 .env
 .DS_Store
 *.log
+
+# Ignore non-project files
+clg ppt.pptx
+~$clg ppt.pptx
+report_outline.txt
+extracted_images/
+
+# Server (separate deployment)
+server/
