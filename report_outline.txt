@@ -1,0 +1,202 @@
+[3] (Style: ) PROJECT REPORT 
+[4] (Style: ) On
+[5] (Style: ) SprintCraft:
+[6] (Style: ) An Interactive Kanban & Sprint Planning Workspace
+[7] (Style: ) BATCH-2024
+[11] (Style: ) Project Mentor                                                                            Student Name & ID     
+[12] (Style: ListParagraph) Mr. Sandeep Rana Mr. Sandeep Rana Trishi Sharma
+[13] (Style: ) Mr. Sandeep Rana 
+[14] (Style: ) Mr. Sandeep Rana 
+[15] (Style: ListParagraph)    (2411981591)
+[21] (Style: Footer) Sustainable Development Goals
+[41] (Style: ) SprintCraft: An Interactive Kanban & Sprint Planning Workspace
+[43] (Style: ListParagraph) Introduction
+[44] (Style: ListParagraph) Objective
+[45] (Style: ListParagraph) Technology Stack
+[47] (Style: ListParagraph) Project Description
+[49] (Style: ListParagraph) System Architecture & Design
+[50] (Style: ListParagraph) High-Level System Architecture
+[51] (Style: ListParagraph) Detailed System Design
+[52] (Style: ListParagraph) UML Diagrams
+[54] (Style: ListParagraph) Database Design
+[55] (Style: ListParagraph) ER Diagram (Simplified)
+[56] (Style: ListParagraph) Relationships
+[58] (Style: ListParagraph) Data Flow Diagrams (DFD)
+[59] (Style: ListParagraph) Level 0 DFD (Context Level)
+[60] (Style: ListParagraph) Level 1 DFD
+[62] (Style: ListParagraph) Features Implemented
+[64] (Style: ListParagraph) Screenshots
+[67] (Style: ListParagraph) Challenges Faced
+[69] (Style: ListParagraph) Pending Tasks
+[72] (Style: ListParagraph) Conclusion
+[74] (Style: ListParagraph)  Appendix
+[76] (Style: ) Project Report:  MERN Stack Web Application
+[77] (Style: ) Project Title:  SprintCraft-
+[78] (Style: ) An Interactive Kanban & Sprint Planning Workspace
+[80] (Style: ) 1. Introduction
+[81] (Style: ) 1.1 Objective
+[82] (Style: ) Modern software engineering teams and agile project managers operate in fast-paced environments where rapid communication, task visibility, and real-time state alignment are paramount to success. Traditional, static task management systems often fall short because they rely on periodic manual page refreshes or HTTP polling mechanisms to reflect updates across different client interfaces. This creates data desynchronization, operational delays, and visual confusion when multiple team members collaborate simultaneously on a single project workspace. 
+[83] (Style: ) The primary objective of SprintCraft is to bridge this gap by delivering a lightweight, highly responsive, and event-driven Kanban and Sprint Planning Workspace. Designed specifically for agile development workflows, the platform provides end-to-end functionality for structuring software projects into manageable sprints, tracking work items visually across customizable board columns (Backlog, To Do, In Progress, Testing, Done), and maintaining absolute synchronization across all connected clients in real time. 
+[84] (Style: ) Key core objectives include:
+[85] (Style: ) Eliminating Data Latency in Collaboration: Leveraging persistent bi-directional WebSocket connections to ensure that board edits, column shifts, and task card interactions broadcast instantly to every active project member without requiring page reloads. 
+[86] (Style: ) Delivering a Fluid User Interface: Utilizing modern frontend drag-and-drop mechanics to make task reassignment and workflow progression intuitive, tactile, and frictionless. 
+[87] (Style: ) Establishing Granular Access and Security: Enforcing robust authentication and Role-Based Access Control (RBAC) mechanisms using industry-standard token encryption to secure project data across workspaces. 
+[88] (Style: ) Streamlining Media & File Handling: Providing a cloud-backed attachment pipeline that enables seamless document, code snippet, and asset uploads linked directly to relevant task cards. 
+[89] (Style: ) Providing a Scalable Foundation: Structuring a clean, modular MERN architecture that separates client rendering, RESTful business logic, real-time event distribution, and document database persistence. 
+[91] (Style: ) 1.2 Technology Stack
+[92] (Style: ) SprintCraft is built upon the MERN stack (MongoDB, Express.js, React.js, Node.js), augmented with specialized real-time protocols and cloud asset pipelines. Each tier of the architecture was selected to optimize performance, maintainability, developer productivity, and real-time scalability. 
+[95] (Style: ) Layer / Category
+[96] (Style: ) Primary Technology
+[97] (Style: ) Role
+[98] (Style: ) Description
+[99] (Style: ) Key Modules & Libraries / Services
+[100] (Style: ) 1. Client-Side Framework (Frontend)
+[101] (Style: ) React.js
+[102] (Style: ) Single Page Application (SPA) User Interface Rendering
+[103] (Style: ) Renders dynamic UI using components; syncs board state without full DOM reloads.
+[104] (Style: ) • @hello-pangea/dnd: Drag-and-drop Kanban animations. 
+[105] (Style: ) • Socket.io-client: Real-time WebSocket connection. 
+[106] (Style: ) • Axios / Fetch API: HTTP REST requests for data and auth. 
+[107] (Style: ) 2. Server-Side Framework (Backend Engine)
+[108] (Style: ) Node.js & Express.js
+[109] (Style: ) RESTful API Layer, Middleware Processing, & Event Orchestration
+[110] (Style: ) Handles non-blocking async I/O, backend routing, and user request processing.
+[111] (Style: ) • Socket.io: Manages WebSockets and broadcasts live updates. 
+[112] (Style: ) • jsonwebtoken: Secure, stateless JWT user sessions. 
+[114] (Style: ) • bcryptjs: Password hashing and encryption. 
+[116] (Style: ) • Multer: Middleware for file buffer uploads. 
+[118] (Style: ) 3. Database & Cloud Media Pipeline
+[119] (Style: ) MongoDB & Mongoose ORM
+[120] (Style: ) Primary Document Database & Data Persistence
+[121] (Style: ) Stores dynamic JSON documents for users, boards, and tasks with schema validation.
+[122] (Style: ) • Mongoose ODM: Enforces database schema and ObjectId references.
+[124] (Style: ) Cloudinary CDN
+[125] (Style: ) Cloud Storage & Media Delivery Network
+[126] (Style: ) Offloads file storage by hosting attachments globally and returning secure HTTPS URLs.
+[127] (Style: ) • Cloudinary API: Manages cloud upload streams for images and files.
+[128] (Style: ) 4. Deployment & DevOps Infrastructure
+[129] (Style: ) Cloud Hosting Platforms
+[130] (Style: ) Global Hosting & Runtime Execution
+[131] (Style: ) Provides cloud hosting and edge deployment for backend runtime and frontend assets.
+[132] (Style: ) • Vercel: Edge CDN hosting for production React build. 
+[133] (Style: ) • Render: Node.js cloud hosting supporting WebSockets. 
+[135] (Style: ) Table 1 – Technology Stack
+[157] (Style: ) 2. Project Description
+[158] (Style: ) SprintCraft is an interactive, real-time Kanban and Sprint Planning Workspace engineered to streamline agile task management, team collaboration, and workflow tracking. By replacing fragmented, static project management tools with a dynamic MERN-stack architecture, SprintCraft provides software development teams, project managers, and academic groups with an all-in-one platform to plan, execute, and monitor project milestones efficiently. 
+[159] (Style: ) The core concept of SprintCraft centers around an event-driven, multi-level hierarchy that organizes tasks logically into Workspaces, Boards, Columns, and Cards: 
+[160] (Style: ) Workspaces & Board Architecture: Users can establish dedicated team hubs (Workspaces) representing specific departments, products, or academic initiatives. Within each workspace, members can instantiate multiple project boards configured with customized workflow columns—such as Backlog, To Do, In Progress, In Review, and Done. 
+[161] (Style: ) Interactive Drag-and-Drop Workflow: Task management is made intuitive through dynamic card interaction. Users can reorder task cards within a column or transition them across different status stages using client-side drag-and-drop mechanics (@hello-pangea/dnd), providing immediate tactile and visual feedback. 
+[162] (Style: ) Zero-Refresh Real-Time Synchronization: Unlike conventional web applications that require manual browser reloads, SprintCraft utilizes persistent WebSocket connections (Socket.io). Every action—whether moving a card, updating a task title, changing assignees, or editing descriptions—is instantaneously broadcast across all connected client interfaces viewing the same board. 
+[163] (Style: ) Role-Based Workspace Security: Secure user onboarding and session persistence are guaranteed using JSON Web Tokens (JWT) and encrypted password storage (bcryptjs). Granular Role-Based Access Control (RBAC) ensures that only authorized administrators and workspace members can modify board layouts, assign tasks, or access sensitive project assets. 
+[164] (Style: ) Cloud-Backed Asset & Media Pipeline: To support detailed task context, SprintCraft integrates a direct cloud storage pipeline. Users can attach documentation, design mockups, logs, and screenshots directly to individual task cards. Attachments are processed via backend stream buffers (Multer) and served globally through a Cloudinary Content Delivery Network (CDN). 
+[165] (Style: ) Ultimately, SprintCraft eliminates communication latency, prevents state desynchronization among remote team members, and delivers a modern, production-ready solution tailored for high-velocity software engineering workflows. 
+[175] (Style: ) 3. System Architecture & Design
+[176] (Style: ) 3.1 High-Level System Architecture
+[177] (Style: ) SprintCraft follows a modular, client-server MERN stack architecture integrated with an event-driven real-time WebSocket pipeline. The system is designed to cleanly decouple client rendering, RESTful business logic, database persistence, and live client state synchronization. 
+[178] (Style: ) The overall flow begins at the client interface, where users interact with dynamic Kanban boards rendered using React.js. Initial data retrieval, user authentication, and resource updates are handled asynchronously via standard HTTP REST API endpoints exposed by the Node.js and Express.js backend server. 
+[179] (Style: ) To enable instant multi-user collaboration without requiring page reloads, a parallel WebSocket connection is established using Socket.io. When a board modification or task movement occurs, the backend updates the primary document store in MongoDB and immediately dispatches a real-time event to all active clients viewing that specific workspace. Additionally, external media assets attached to task cards are offloaded to Cloudinary CDN via Multer backend streaming, ensuring high system performance and efficient resource usage. 
+[182] (Style: ) Figure 1 - High-Level System Architecture
+[184] (Style: ) 3.2 Detailed System Design
+[185] (Style: ) The system design of SprintCraft is structured into distinct, decoupled operational layers. Each tier handles a specific area of responsibility—from client rendering and API request processing to real-time event broadcasting and data persistence.
+[186] (Style: Heading3) 3.2.1 Component Overview Table
+[187] (Style: Heading3) Component
+[188] (Style: Heading3) Technology
+[189] (Style: Heading3) Primary Functionality
+[190] (Style: Heading3) Client Layer
+[191] (Style: Heading3) React.js, @hello-pangea/dnd, Socket.io-client
+[192] (Style: Heading3) Renders Single Page Application (SPA), manages drag-and-drop state, and handles low-latency WebSockets. 
+[193] (Style: Heading3) API Layer
+[194] (Style: Heading3) Node.js, Express.js
+[195] (Style: Heading3) Exposes structured REST API endpoints (/api/auth, /api/workspaces, /api/boards, /api/tasks). 
+[196] (Style: Heading3) Real-Time Engine
+[197] (Style: Heading3) Socket.io Server Engine
+[198] (Style: Heading3) Manages persistent WebSocket handshakes, channels, and broadcasts real-time board updates. 
+[199] (Style: Heading3) Authentication & Middleware
+[200] (Style: Heading3) JWT, bcryptjs, RBAC
+[201] (Style: Heading3) Verifies session tokens, encrypts credentials, and enforces permission rules across endpoints. 
+[202] (Style: Heading3) Database
+[203] (Style: Heading3) MongoDB & Mongoose ODM
+[204] (Style: Heading3) Stores schema-validated JSON documents for Users, Workspaces, Boards, and Tasks. 
+[205] (Style: Heading3) Cloud Storage
+[206] (Style: Heading3) Cloudinary CDN & Multer
+[207] (Style: Heading3) Streams multipart form data and serves task attachment media globally via HTTPS. 
+[208] (Style: Heading3) Table 2 – Components overview
+[209] (Style: Heading3) 3.2.2 Detailed Subsystem Breakdown
+[210] (Style: Heading4) 1. Client Layer (React.js Frontend Engine)
+[211] (Style: NormalWeb) Component Hierarchy & Routing: Built using a modular component structure (e.g., WorkspaceView, KanbanBoard, Column, TaskCard, TaskModal). React Router handles client-side navigation without triggering full browser reloads. 
+[212] (Style: NormalWeb) Interactive Drag-and-Drop Engine: Integrates @hello-pangea/dnd to enable smooth drag-and-drop mechanics. When a user drags a task card across workflow columns (To Do, In Progress, Done), local state updates immediately to ensure zero visual latency. 
+[213] (Style: NormalWeb) Socket Listener: Maintains a persistent Socket.io-client connection to listen for incoming workspace events, updating the board view whenever team members make concurrent changes. 
+[214] (Style: Heading4) 2. API Layer & Event Dispatcher (Backend Engine)
+[215] (Style: NormalWeb) RESTful Endpoints: Serves as the central API gateway handling incoming HTTP operations: 
+[216] (Style: NormalWeb) /api/auth: Manages user registration, login verification, and token issuance. 
+[217] (Style: NormalWeb) /api/workspaces: Handles team workspace creation, member management, and workspace-level permissions. 
+[218] (Style: NormalWeb) /api/boards: Handles board column creation, layout updates, and board deletion. 
+[219] (Style: NormalWeb) /api/tasks: Manages full CRUD lifecycle (Create, Read, Update, Delete) for individual task cards. 
+[220] (Style: NormalWeb) Real-Time WebSocket Hub: Uses Socket.io to group connected client sockets into isolated rooms based on workspace_id or board_id. When an action occurs (e.g., a card is moved), the server emits a delta update event strictly to clients connected to that room. 
+[221] (Style: Heading4) 3. Security & Access Control Infrastructure
+[222] (Style: NormalWeb) Stateless Token Authentication: Uses JSON Web Tokens (JWT). Upon logging in, the server generates a signed JWT containing user identity claims, which the client attaches to the Authorization header of subsequent REST requests. 
+[223] (Style: NormalWeb) Credential Encryption: Passwords are salted and encrypted using bcryptjs before being stored in the database. 
+[224] (Style: NormalWeb) Role-Based Access Control (RBAC): Middleware checks verify whether an authenticated user holds the appropriate role (e.g., Admin vs. Member) before allowing modifications to board structures or workspace configurations. 
+[225] (Style: Heading4) 4. Database & Cloud Media Pipeline
+[226] (Style: NormalWeb) MongoDB & Mongoose ODM: Stores application data across four core document collections: 
+[227] (Style: NormalWeb) Users: Authentication data, profile details, and assigned roles. 
+[228] (Style: NormalWeb) Workspaces: Metadata and arrays of referenced member IDs. 
+[229] (Style: NormalWeb) Boards: Board configurations and ordered list arrays for workflow columns. 
+[230] (Style: NormalWeb) Tasks: Title, description, column status, assignee IDs, due dates, and attachment URLs. 
+[231] (Style: NormalWeb) Cloud Asset Management: When attachments (images, PDFs, screenshots) are added to a task card, Multer buffers the incoming file stream on the backend and pipes it directly to Cloudinary. Cloudinary hosts the asset on its global CDN and returns a secure URL, which is persisted inside the corresponding MongoDB task document. 
+[244] (Style: ) 4. Database Design
+[245] (Style: ) 4.1 ER Diagram (Simplified)
+[247] (Style: ) Figure 2 – ER diagram
+[248] (Style: ) 4.2 Relationships
+[249] (Style: ListParagraph) One-to-Many (User → Workspaces): One User can create or manage multiple Workspaces. The ownerId field within the Workspace collection acts as a foreign key referencing _id in the User collection.
+[250] (Style: ListParagraph) One-to-Many (Workspace → Boards): One Workspace can host multiple project Boards. The workspaceId field in the Board collection references _id in the Workspace collection.
+[251] (Style: ListParagraph) One-to-Many (Board → Tasks): One Board contains multiple Task cards distributed across workflow columns. The boardId field in the Task collection references _id in the Board collection.
+[252] (Style: ListParagraph) One-to-Many (User → Tasks Assigned): One User can be assigned responsibility for multiple Tasks. The assignedTo field in the Task collection references _id in the User collection.
+[257] (Style: ) 5. Data Flow Diagrams (DFD)
+[258] (Style: ) 5.1 Level 0 DFD (Context Level)
+[262] (Style: ) Figure 3 – level 0 DFD (Context level)
+[263] (Style: ) Figure 3 illustrates the high-level data flow between external entities and the central system:
+[264] (Style: ) User / Admin: Sends HTTP API Requests (such as logins, creating tasks, and updating boards) to the central backend engine and receives live board state updates via WebSockets.                                                                                                                                                     
+[265] (Style: ) MongoDB & Cloudinary Storage: Receives Queries from the backend engine to fetch or store application records, returning Data Persistence responses for database documents and task file attachments.
+[272] (Style: ) 5.2 Level 1 DFD
+[274] (Style: ) Figure 4 – level 1 DFD 
+[275] (Style: ) Figure 4 breaks down the central backend engine into four key processes to detail internal data flow:
+[276] (Style: ) P1.0 Authentication: Validates user credentials and issues access tokens to authorize requests across the system.
+[277] (Style: ) P2.0 Workspace Manager: Processes client API requests to handle workspace setups, board configurations, and user permissions.
+[278] (Style: ) P3.0 Task Pipeline: Executes task CRUD operations, querying MongoDB and Cloudinary storage while sending state updates back.
+[279] (Style: ) P4.0 Live Dispatcher: Captures real-time changes from the workspace and task pipelines, broadcasting event updates to users via WebSockets.
+[287] (Style: ) 6. Features Implemented
+[288] (Style: ) Feature
+[289] (Style: ) Description
+[290] (Style: ) User Registration/Login
+[291] (Style: ) Secure JWT-based authentication and user session management system.
+[292] (Style: ) Add Task
+[293] (Style: ) Dynamic task creation interface with title, description, priority, and deadline assignments.
+[294] (Style: ) Edit/Delete Task
+[295] (Style: ) Full Task CRUD operations allowing real-time updates and task deletion.
+[296] (Style: ) Filter by Status
+[297] (Style: ) Instant board filtering to toggle tasks between completed, pending, and workflow stages.
+[298] (Style: ) Responsive UI
+[299] (Style: ) Mobile and desktop compatible layout optimized for various screen resolutions.
+[318] (Style: ) 7. Screenshots
+[319] (Style: ) (Include pages like Login, Dashboard, Task Form, Filters, etc.)
+[321] (Style: ) 8. Challenges Faced
+[322] (Style: ) Challenge
+[323] (Style: ) Solution
+[324] (Style: ) Token Expiry
+[325] (Style: ) Implemented refresh strategy
+[326] (Style: ) Form Validation
+[327] (Style: ) Used Yup + Formik
+[328] (Style: ) CORS
+[329] (Style: ) Handled via middleware
+[331] (Style: ) 9. Future Enhancements
+[332] (Style: ) Add tags/categories to tasks
+[333] (Style: ) Push notifications
+[334] (Style: ) Real-time collaboration
+[335] (Style: ) Google OAuth login
+[338] (Style: ) 10. Conclusion
+[339] (Style: ) This MERN stack project showcases a production-ready web app with clean separation of frontend and backend logic. It demonstrates RESTful API integration, secure auth practices, and scalable database design using NoSQL (MongoDB).
+[341] (Style: ) 12. Appendix
+[342] (Style: ) GitHub Repo: https://github.com/username/taskflow
+[343] (Style: ) Live App: https://taskflow.vercel.app
+[344] (Style: ) Postman Docs: Included in repository
