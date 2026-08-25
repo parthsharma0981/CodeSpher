@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Outlet, NavLink, useNavigate } from 'react-router-dom';
+import { Outlet, NavLink, Link, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
   FolderKanban,
@@ -50,14 +50,14 @@ const MainLayout = () => {
   const Sidebar = () => (
     <div className='flex flex-col h-full bg-white dark:bg-black border-r border-neutral-200 dark:border-neutral-800'>
       <div className='p-4 flex items-center justify-between border-b border-neutral-200 dark:border-neutral-800'>
-        <div className='flex items-center gap-2'>
-          <div className='w-8 h-8 rounded-lg bg-black dark:bg-white flex items-center justify-center'>
+        <Link to={ROUTES.HOME} className='flex items-center gap-2 group hover:opacity-80 transition-opacity' title='Go to Landing Page'>
+          <div className='w-8 h-8 rounded-lg bg-black dark:bg-white flex items-center justify-center shadow-sm'>
             <Code2 className='w-5 h-5 text-white dark:text-black' />
           </div>
-          <span className='text-xl font-bold tracking-tight dark:text-white'>
+          <span className='text-xl font-bold tracking-tight text-neutral-900 dark:text-white'>
             CodeSphere
           </span>
-        </div>
+        </Link>
         <button className='md:hidden' onClick={() => setSidebarOpen(false)}>
           <X className='w-6 h-6 text-neutral-500' />
         </button>

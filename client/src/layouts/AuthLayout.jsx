@@ -1,7 +1,8 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, Link } from 'react-router-dom';
 import { Code2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { ROUTES } from '../utils/constants';
 
 const AuthLayout = () => {
   return (
@@ -14,15 +15,19 @@ const AuthLayout = () => {
           transition={{ duration: 0.6 }}
           className='max-w-md'
         >
-          <div className='flex items-center gap-3 mb-8'>
-            <div className='w-10 h-10 rounded-xl bg-black dark:bg-white flex items-center justify-center'>
+          <Link 
+            to={ROUTES.HOME} 
+            className='inline-flex items-center gap-3 mb-8 group hover:opacity-80 transition-opacity'
+            title='Go to Landing Page'
+          >
+            <div className='w-10 h-10 rounded-xl bg-black dark:bg-white flex items-center justify-center shadow-sm'>
               <Code2 className='w-6 h-6 text-white dark:text-black' />
             </div>
-            <span className='text-2xl font-bold tracking-tight text-black dark:text-white'>
+            <span className='text-2xl font-bold tracking-tight text-neutral-900 dark:text-white'>
               CodeSphere
             </span>
-          </div>
-          <h2 className='text-4xl font-bold tracking-tight leading-tight text-black dark:text-white'>
+          </Link>
+          <h2 className='text-4xl font-bold tracking-tight leading-tight text-neutral-900 dark:text-white'>
             One workspace for
             <br />
             planning, coding,
@@ -45,13 +50,19 @@ const AuthLayout = () => {
           className='w-full max-w-md'
         >
           {/* Mobile logo */}
-          <div className='flex items-center gap-2 mb-8 lg:hidden'>
-            <div className='w-8 h-8 rounded-lg bg-black dark:bg-white flex items-center justify-center'>
-              <Code2 className='w-5 h-5 text-white dark:text-black' />
-            </div>
-            <span className='text-xl font-bold tracking-tight dark:text-white'>
-              CodeSphere
-            </span>
+          <div className='mb-8 lg:hidden'>
+            <Link 
+              to={ROUTES.HOME} 
+              className='inline-flex items-center gap-2 group hover:opacity-80 transition-opacity'
+              title='Go to Landing Page'
+            >
+              <div className='w-8 h-8 rounded-lg bg-black dark:bg-white flex items-center justify-center shadow-sm'>
+                <Code2 className='w-5 h-5 text-white dark:text-black' />
+              </div>
+              <span className='text-xl font-bold tracking-tight text-neutral-900 dark:text-white'>
+                CodeSphere
+              </span>
+            </Link>
           </div>
           <Outlet />
         </motion.div>
