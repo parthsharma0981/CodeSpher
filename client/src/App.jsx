@@ -33,76 +33,76 @@ import LoadingSpinner from './components/common/LoadingSpinner';
 import Toast from './components/common/Toast';
 
 const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated, loading } = useAuth();
+ const { isAuthenticated, loading } = useAuth();
 
-  if (loading) {
-    return <LoadingSpinner fullScreen />;
-  }
+ if (loading) {
+ return <LoadingSpinner fullScreen />;
+ }
 
-  if (!isAuthenticated) {
-    return <Navigate to={ROUTES.LOGIN} replace />;
-  }
+ if (!isAuthenticated) {
+ return <Navigate to={ROUTES.LOGIN} replace />;
+ }
 
-  return children;
+ return children;
 };
 
 function App() {
-  const { loading } = useAuth();
+ const { loading } = useAuth();
 
-  if (loading) {
-    return <LoadingSpinner fullScreen />;
-  }
+ if (loading) {
+ return <LoadingSpinner fullScreen />;
+ }
 
-  return (
-    <>
-      <Toast />
-      <BrowserRouter>
-        <Routes>
-          {/* Public Route */}
-          <Route path={ROUTES.HOME} element={<LandingPage />} />
+ return (
+ <>
+ <Toast />
+ <BrowserRouter>
+ <Routes>
+ {/* Public Route */}
+ <Route path={ROUTES.HOME} element={<LandingPage />} />
 
-          {/* Auth Routes */}
-          <Route element={<AuthLayout />}>
-            <Route path={ROUTES.LOGIN} element={<Login />} />
-            <Route path={ROUTES.REGISTER} element={<Register />} />
-            <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPassword />} />
-            <Route path={ROUTES.VERIFY_OTP} element={<OTPVerification />} />
-            <Route path={ROUTES.RESET_PASSWORD} element={<ResetPassword />} />
-          </Route>
+ {/* Auth Routes */}
+ <Route element={<AuthLayout />}>
+ <Route path={ROUTES.LOGIN} element={<Login />} />
+ <Route path={ROUTES.REGISTER} element={<Register />} />
+ <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPassword />} />
+ <Route path={ROUTES.VERIFY_OTP} element={<OTPVerification />} />
+ <Route path={ROUTES.RESET_PASSWORD} element={<ResetPassword />} />
+ </Route>
 
-          {/* Protected Dashboard Routes */}
-          <Route
-            element={
-              <ProtectedRoute>
-                <DashboardLayout />
-              </ProtectedRoute>
-            }
-          >
-            <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
-            <Route path={ROUTES.WORKSPACES} element={<Workspace />} />
-            <Route
-              path={ROUTES.WORKSPACE_DETAIL}
-              element={<WorkspaceDetail />}
-            />
-            <Route path={ROUTES.PROJECTS} element={<Project />} />
-            <Route path={ROUTES.PROJECT_DETAIL} element={<Project />} />
-            <Route path={ROUTES.TASK_BOARD} element={<TaskBoard />} />
-            <Route path={ROUTES.TASKS} element={<TaskBoard />} />
-            <Route path={ROUTES.CHAT} element={<Chat />} />
-            <Route path={ROUTES.CALENDAR} element={<Calendar />} />
-            <Route path={ROUTES.ANALYTICS} element={<Analytics />} />
-            <Route path={ROUTES.SETTINGS} element={<Settings />} />
-            <Route path={ROUTES.PROFILE} element={<Profile />} />
-            <Route path={ROUTES.ADMIN} element={<AdminPanel />} />
-            <Route path={ROUTES.NOTIFICATIONS} element={<Notifications />} />
-          </Route>
+ {/* Protected Dashboard Routes */}
+ <Route
+ element={
+ <ProtectedRoute>
+ <DashboardLayout />
+ </ProtectedRoute>
+ }
+ >
+ <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
+ <Route path={ROUTES.WORKSPACES} element={<Workspace />} />
+ <Route
+ path={ROUTES.WORKSPACE_DETAIL}
+ element={<WorkspaceDetail />}
+ />
+ <Route path={ROUTES.PROJECTS} element={<Project />} />
+ <Route path={ROUTES.PROJECT_DETAIL} element={<Project />} />
+ <Route path={ROUTES.TASK_BOARD} element={<TaskBoard />} />
+ <Route path={ROUTES.TASKS} element={<TaskBoard />} />
+ <Route path={ROUTES.CHAT} element={<Chat />} />
+ <Route path={ROUTES.CALENDAR} element={<Calendar />} />
+ <Route path={ROUTES.ANALYTICS} element={<Analytics />} />
+ <Route path={ROUTES.SETTINGS} element={<Settings />} />
+ <Route path={ROUTES.PROFILE} element={<Profile />} />
+ <Route path={ROUTES.ADMIN} element={<AdminPanel />} />
+ <Route path={ROUTES.NOTIFICATIONS} element={<Notifications />} />
+ </Route>
 
-          {/* 404 Route */}
-          <Route path='*' element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </>
-  );
+ {/* 404 Route */}
+ <Route path='*' element={<NotFound />} />
+ </Routes>
+ </BrowserRouter>
+ </>
+ );
 }
 
 export default App;
