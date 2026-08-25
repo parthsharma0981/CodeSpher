@@ -63,13 +63,13 @@ const Register = () => {
     }
   };
 
-  const strengthColors = ['bg-slate-200', 'bg-danger', 'bg-warning', 'bg-blue-500', 'bg-success'];
+  const strengthColors = ['bg-neutral-200', 'bg-red-600', 'bg-warning', 'bg-blue-500', 'bg-success'];
 
   return (
     <div className="w-full">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Create an account</h2>
-        <p className="text-slate-600 dark:text-slate-400">Join CodeSphere and start collaborating today.</p>
+        <h2 className="text-3xl font-bold text-neutral-900 dark:text-white mb-2">Create an account</h2>
+        <p className="text-neutral-600 dark:text-neutral-400">Join CodeSphere and start collaborating today.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -108,15 +108,15 @@ const Register = () => {
           {formData.password && (
             <div className="mt-2">
               <div className="flex justify-between items-center mb-1">
-                <span className="text-xs text-slate-500">Password strength:</span>
-                <span className="text-xs font-medium text-slate-700 dark:text-slate-300">{passwordStrength.message}</span>
+                <span className="text-xs text-neutral-500">Password strength:</span>
+                <span className="text-xs font-medium text-neutral-700 dark:text-neutral-300">{passwordStrength.message}</span>
               </div>
               <div className="flex gap-1 h-1.5 w-full">
                 {[1, 2, 3, 4].map((level) => (
                   <div 
                     key={level} 
                     className={`h-full flex-1 rounded-full transition-colors duration-300 ${
-                      level <= passwordStrength.strength ? strengthColors[passwordStrength.strength] : 'bg-slate-200 dark:bg-slate-700'
+                      level <= passwordStrength.strength ? strengthColors[passwordStrength.strength] : 'bg-neutral-200 dark:bg-neutral-700'
                     }`}
                   />
                 ))}
@@ -145,13 +145,13 @@ const Register = () => {
               setTermsAccepted(e.target.checked);
               if (errors.terms) setErrors({ ...errors, terms: null });
             }}
-            className="mt-1 rounded border-slate-300 text-primary focus:ring-primary dark:border-slate-700 dark:bg-slate-900" 
+            className="mt-1 rounded border-neutral-300 text-black dark:text-white focus:ring-neutral-400 dark:border-neutral-700 dark:bg-neutral-900" 
           />
           <div className="ml-2">
-            <label htmlFor="terms" className="text-sm text-slate-600 dark:text-slate-400">
-              I accept the <a href="#" className="text-primary hover:underline">Terms of Service</a> and <a href="#" className="text-primary hover:underline">Privacy Policy</a>
+            <label htmlFor="terms" className="text-sm text-neutral-600 dark:text-neutral-400">
+              I accept the <a href="#" className="text-black dark:text-white hover:underline">Terms of Service</a> and <a href="#" className="text-black dark:text-white hover:underline">Privacy Policy</a>
             </label>
-            {errors.terms && <p className="mt-1 text-xs text-danger">{errors.terms}</p>}
+            {errors.terms && <p className="mt-1 text-xs text-red-600">{errors.terms}</p>}
           </div>
         </div>
 
@@ -161,9 +161,9 @@ const Register = () => {
       </form>
 
       <div className="mt-6 text-center">
-        <p className="text-sm text-slate-600 dark:text-slate-400">
+        <p className="text-sm text-neutral-600 dark:text-neutral-400">
           Already have an account?{' '}
-          <Link to={ROUTES.LOGIN} className="font-semibold text-primary hover:text-accent transition-colors">
+          <Link to={ROUTES.LOGIN} className="font-semibold text-black dark:text-white hover:text-neutral-600 transition-colors">
             Log in
           </Link>
         </p>

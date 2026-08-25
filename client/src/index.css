@@ -4,39 +4,59 @@
 
 @layer base {
   body {
-    @apply antialiased text-slate-900 bg-background-light dark:text-slate-100 dark:bg-background-dark transition-colors duration-300 min-h-screen;
+    @apply antialiased text-neutral-900 bg-white dark:text-neutral-100 dark:bg-black transition-colors duration-300 min-h-screen;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight text-black dark:text-white;
   }
 }
 
 @layer utilities {
   .glass {
-    @apply bg-white/10 backdrop-blur-xl border border-white/20 dark:bg-slate-900/50 dark:border-white/10 shadow-xl;
+    @apply bg-white border border-neutral-200 dark:bg-neutral-900 dark:border-neutral-800 shadow-sm;
   }
   
   .glass-card {
-    @apply bg-white/60 backdrop-blur-lg border border-white/40 dark:bg-slate-800/60 dark:border-slate-700/50 shadow-lg rounded-2xl;
+    @apply bg-white border border-neutral-200 dark:bg-neutral-900 dark:border-neutral-800 shadow-sm rounded-2xl;
   }
   
   .glass-nav {
-    @apply bg-white/70 backdrop-blur-md border-b border-white/20 dark:bg-background-dark/70 dark:border-white/10 sticky top-0 z-50;
+    @apply bg-white/90 backdrop-blur-md border-b border-neutral-200 dark:bg-black/90 dark:border-neutral-800 sticky top-0 z-50;
   }
 
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent;
+    @apply text-black dark:text-white;
+  }
+
+  .card-minimal {
+    @apply bg-neutral-50 dark:bg-neutral-900 rounded-2xl p-6 transition-all duration-300 hover:bg-neutral-100 dark:hover:bg-neutral-800;
+  }
+
+  .card-bordered {
+    @apply bg-white border border-neutral-200 dark:bg-neutral-950 dark:border-neutral-800 rounded-2xl p-6;
+  }
+
+  .btn-primary {
+    @apply bg-black text-white hover:bg-neutral-800 dark:bg-white dark:text-black dark:hover:bg-neutral-200 rounded-full px-6 py-3 text-sm font-medium transition-all;
+  }
+
+  .btn-outline {
+    @apply bg-transparent border border-neutral-300 text-black hover:bg-neutral-50 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-900 rounded-full px-6 py-3 text-sm font-medium transition-all;
   }
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   @apply bg-transparent;
 }
 ::-webkit-scrollbar-thumb {
-  @apply bg-slate-300 rounded-full dark:bg-slate-700;
+  @apply bg-neutral-300 rounded-full dark:bg-neutral-700;
 }
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-slate-400 dark:bg-slate-600;
+  @apply bg-neutral-400 dark:bg-neutral-600;
 }

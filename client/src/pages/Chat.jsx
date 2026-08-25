@@ -101,9 +101,9 @@ const Chat = () => {
   );
 
   return (
-    <div className="flex h-full min-h-[calc(100vh-4rem)] bg-slate-900 overflow-hidden text-white rounded-2xl border border-white/10 m-4">
+    <div className="flex h-full min-h-[calc(100vh-4rem)] bg-neutral-900 overflow-hidden text-white rounded-2xl border border-white/10 m-4">
       {/* Sidebar */}
-      <div className="w-72 flex flex-col border-r border-white/10 bg-slate-900/50 backdrop-blur-xl">
+      <div className="w-72 flex flex-col border-r border-white/10 bg-neutral-900/50 backdrop-blur-xl">
         <div className="p-4 border-b border-white/10">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
@@ -196,7 +196,7 @@ const Chat = () => {
         <motion.div
           initial={{ width: 0, opacity: 0 }}
           animate={{ width: 280, opacity: 1 }}
-          className="border-l border-white/10 bg-slate-900/80 backdrop-blur-xl flex flex-col"
+          className="border-l border-white/10 bg-neutral-900/80 backdrop-blur-xl flex flex-col"
         >
           <div className="p-6 border-b border-white/10 text-center">
             {activeChannel ? (
@@ -222,7 +222,7 @@ const Chat = () => {
                 <div key={member.id} className="flex items-center space-x-3">
                   <div className="relative">
                     <img src={member.avatar} alt={member.name} className="w-8 h-8 rounded-full object-cover" />
-                    {member.online && <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border border-slate-900"></div>}
+                    {member.online && <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border border-neutral-900"></div>}
                   </div>
                   <span className="text-sm font-medium">{member.name}</span>
                 </div>

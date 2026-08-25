@@ -3,12 +3,12 @@ import { classNames } from '../../utils/helpers';
 
 const Badge = ({ children, variant = 'default', icon: Icon, className = '' }) => {
   const variants = {
-    default: 'bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300',
-    primary: 'bg-primary/10 text-primary dark:bg-primary/20',
+    default: 'bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-300',
+    primary: 'bg-neutral-100 text-black dark:text-white dark:bg-neutral-800',
     success: 'bg-success/10 text-success dark:bg-success/20',
     warning: 'bg-warning/10 text-warning dark:bg-warning/20',
-    danger: 'bg-danger/10 text-danger dark:bg-danger/20',
-    info: 'bg-accent/10 text-accent dark:bg-accent/20',
+    danger: 'bg-danger/10 text-red-600 dark:bg-danger/20',
+    info: 'bg-accent/10 text-neutral-600 dark:bg-accent/20',
   };
 
   return (

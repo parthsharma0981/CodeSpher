@@ -81,25 +81,25 @@ const Settings = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label className="block text-sm font-medium text-gray-400 mb-2">Full Name</label>
-                      <input type="text" defaultValue="Alex Developer" className="w-full bg-slate-900/50 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500 transition-colors" />
+                      <input type="text" defaultValue="Alex Developer" className="w-full bg-neutral-900/50 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500 transition-colors" />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-400 mb-2">Email Address</label>
-                      <input type="email" defaultValue="alex@example.com" className="w-full bg-slate-900/50 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500 transition-colors" />
+                      <input type="email" defaultValue="alex@example.com" className="w-full bg-neutral-900/50 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500 transition-colors" />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-400 mb-2">Username</label>
-                      <input type="text" defaultValue="alexdev" className="w-full bg-slate-900/50 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500 transition-colors" />
+                      <input type="text" defaultValue="alexdev" className="w-full bg-neutral-900/50 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500 transition-colors" />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-400 mb-2">Timezone</label>
-                      <select className="w-full bg-slate-900/50 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500 appearance-none">
+                      <select className="w-full bg-neutral-900/50 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500 appearance-none">
                         <option>(UTC-08:00) Pacific Time</option><option>(UTC-05:00) Eastern Time</option><option>(UTC+00:00) GMT</option><option>(UTC+05:30) IST</option>
                       </select>
                     </div>
                     <div className="md:col-span-2">
                       <label className="block text-sm font-medium text-gray-400 mb-2">Bio</label>
-                      <textarea rows="3" defaultValue="Passionate frontend engineer..." className="w-full bg-slate-900/50 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500 resize-none"></textarea>
+                      <textarea rows="3" defaultValue="Passionate frontend engineer..." className="w-full bg-neutral-900/50 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500 resize-none"></textarea>
                     </div>
                   </div>
                   <div className="pt-6 border-t border-white/10 flex justify-end">
@@ -140,7 +140,7 @@ const Settings = () => {
                   <div>
                     <h3 className="text-sm font-medium text-gray-400 mb-4">Theme</h3>
                     <div className="grid grid-cols-3 gap-4 max-w-lg">
-                      {[{ id: 'light', label: 'Light', bg: 'bg-white', border: 'border-gray-200' }, { id: 'dark', label: 'Dark', bg: 'bg-slate-900', border: 'border-white/20' }, { id: 'system', label: 'System', bg: 'bg-gradient-to-r from-white to-slate-900', border: 'border-white/20' }].map(theme => (
+                      {[{ id: 'light', label: 'Light', bg: 'bg-white', border: 'border-gray-200' }, { id: 'dark', label: 'Dark', bg: 'bg-neutral-900', border: 'border-white/20' }, { id: 'system', label: 'System', bg: 'bg-gradient-to-r from-white to-neutral-900', border: 'border-white/20' }].map(theme => (
                         <button key={theme.id} onClick={() => setSelectedTheme(theme.id)}
                           className={`flex flex-col items-center justify-center p-4 rounded-xl transition-all ${selectedTheme === theme.id ? 'border-2 border-indigo-500 bg-white/10' : 'border border-white/10 bg-white/5 hover:bg-white/10'}`}>
                           <div className={`w-full h-16 ${theme.bg} rounded-md mb-3 border ${theme.border}`}></div>
@@ -153,7 +153,7 @@ const Settings = () => {
                     <h3 className="text-sm font-medium text-gray-400 mb-4">Accent Color</h3>
                     <div className="flex space-x-4">
                       {['bg-indigo-500', 'bg-purple-500', 'bg-cyan-500', 'bg-emerald-500', 'bg-rose-500', 'bg-amber-500'].map((color, i) => (
-                        <button key={color} onClick={() => setSelectedAccent(i)} className={`w-10 h-10 rounded-full ${color} flex items-center justify-center transition-transform hover:scale-110 ${selectedAccent === i ? 'ring-2 ring-white ring-offset-2 ring-offset-slate-900' : ''}`}>
+                        <button key={color} onClick={() => setSelectedAccent(i)} className={`w-10 h-10 rounded-full ${color} flex items-center justify-center transition-transform hover:scale-110 ${selectedAccent === i ? 'ring-2 ring-white ring-offset-2 ring-offset-neutral-900' : ''}`}>
                           {selectedAccent === i && <div className="w-3 h-3 bg-white rounded-full"></div>}
                         </button>
                       ))}
@@ -181,7 +181,7 @@ const Settings = () => {
                     <div>
                       <label className="block text-sm font-medium text-gray-400 mb-2">Current Password</label>
                       <div className="relative">
-                        <input type={showCurrentPassword ? 'text' : 'password'} placeholder="Enter current password" className="w-full bg-slate-900/50 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500 pr-10" />
+                        <input type={showCurrentPassword ? 'text' : 'password'} placeholder="Enter current password" className="w-full bg-neutral-900/50 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500 pr-10" />
                         <button onClick={() => setShowCurrentPassword(!showCurrentPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white">
                           {showCurrentPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                         </button>
@@ -190,7 +190,7 @@ const Settings = () => {
                     <div>
                       <label className="block text-sm font-medium text-gray-400 mb-2">New Password</label>
                       <div className="relative">
-                        <input type={showNewPassword ? 'text' : 'password'} placeholder="Enter new password" className="w-full bg-slate-900/50 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500 pr-10" />
+                        <input type={showNewPassword ? 'text' : 'password'} placeholder="Enter new password" className="w-full bg-neutral-900/50 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500 pr-10" />
                         <button onClick={() => setShowNewPassword(!showNewPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white">
                           {showNewPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                         </button>
@@ -198,7 +198,7 @@ const Settings = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-400 mb-2">Confirm New Password</label>
-                      <input type="password" placeholder="Confirm new password" className="w-full bg-slate-900/50 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500" />
+                      <input type="password" placeholder="Confirm new password" className="w-full bg-neutral-900/50 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-indigo-500" />
                     </div>
                     <button className="flex items-center space-x-2 bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded-lg text-sm font-medium transition-colors"><Shield size={16} /><span>Update Password</span></button>
                   </div>

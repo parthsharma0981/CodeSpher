@@ -110,7 +110,7 @@ const AdminPanel = () => {
                 placeholder="Search users..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-slate-900 border border-white/10 rounded-lg pl-10 pr-4 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
+                className="w-full bg-neutral-900 border border-white/10 rounded-lg pl-10 pr-4 py-2 text-sm text-white focus:outline-none focus:border-indigo-500"
               />
             </div>
             
@@ -123,13 +123,13 @@ const AdminPanel = () => {
                 <Filter size={18} />
               </button>
               {showFilters && (
-                <div className="absolute right-0 top-full mt-2 w-48 bg-slate-800 border border-white/10 rounded-xl shadow-xl z-50 p-2">
-                  <p className="text-xs font-semibold text-slate-400 uppercase px-3 py-2">Role Filter</p>
+                <div className="absolute right-0 top-full mt-2 w-48 bg-neutral-800 border border-white/10 rounded-xl shadow-xl z-50 p-2">
+                  <p className="text-xs font-semibold text-neutral-400 uppercase px-3 py-2">Role Filter</p>
                   {['All', 'Admin', 'User'].map(r => (
                     <button
                       key={r}
                       onClick={() => { setRoleFilter(r); setShowFilters(false); }}
-                      className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${roleFilter === r ? 'bg-indigo-600/20 text-indigo-400' : 'text-slate-300 hover:bg-white/5'}`}
+                      className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-colors ${roleFilter === r ? 'bg-indigo-600/20 text-indigo-400' : 'text-neutral-300 hover:bg-white/5'}`}
                     >
                       {r} Users
                     </button>
@@ -168,10 +168,10 @@ const AdminPanel = () => {
                       <select 
                         value={user.role}
                         onChange={(e) => handleRoleChange(user.id, e.target.value)}
-                        className="bg-transparent text-sm text-gray-300 focus:outline-none cursor-pointer border border-white/10 rounded px-2 py-1 bg-slate-900"
+                        className="bg-transparent text-sm text-gray-300 focus:outline-none cursor-pointer border border-white/10 rounded px-2 py-1 bg-neutral-900"
                       >
-                        <option value="Admin" className="bg-slate-900">Admin</option>
-                        <option value="User" className="bg-slate-900">User</option>
+                        <option value="Admin" className="bg-neutral-900">Admin</option>
+                        <option value="User" className="bg-neutral-900">User</option>
                       </select>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">

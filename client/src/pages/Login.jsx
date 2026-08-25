@@ -53,8 +53,8 @@ const Login = () => {
   return (
     <div className="w-full">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Welcome back</h2>
-        <p className="text-slate-600 dark:text-slate-400">Please enter your details to sign in.</p>
+        <h2 className="text-3xl font-bold text-neutral-900 dark:text-white mb-2">Welcome back</h2>
+        <p className="text-neutral-600 dark:text-neutral-400">Please enter your details to sign in.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
@@ -82,10 +82,10 @@ const Login = () => {
           />
           <div className="flex justify-between items-center mt-2">
             <label className="flex items-center text-sm">
-              <input type="checkbox" className="rounded border-slate-300 text-primary focus:ring-primary dark:border-slate-700 dark:bg-slate-900" />
-              <span className="ml-2 text-slate-600 dark:text-slate-400">Remember me</span>
+              <input type="checkbox" className="rounded border-neutral-300 text-black dark:text-white focus:ring-neutral-400 dark:border-neutral-700 dark:bg-neutral-900" />
+              <span className="ml-2 text-neutral-600 dark:text-neutral-400">Remember me</span>
             </label>
-            <Link to={ROUTES.FORGOT_PASSWORD} className="text-sm font-medium text-primary hover:text-accent transition-colors">
+            <Link to={ROUTES.FORGOT_PASSWORD} className="text-sm font-medium text-black dark:text-white hover:text-neutral-600 transition-colors">
               Forgot password?
             </Link>
           </div>
@@ -99,10 +99,10 @@ const Login = () => {
       <div className="mt-6 text-center">
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-slate-200 dark:border-slate-700"></div>
+            <div className="w-full border-t border-neutral-200 dark:border-neutral-700"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-white dark:bg-slate-800 text-slate-500">Or continue with</span>
+            <span className="px-2 bg-white dark:bg-neutral-800 text-neutral-500">Or continue with</span>
           </div>
         </div>
 
@@ -122,9 +122,9 @@ const Login = () => {
         </div>
       </div>
 
-      <p className="mt-8 text-center text-sm text-slate-600 dark:text-slate-400">
+      <p className="mt-8 text-center text-sm text-neutral-600 dark:text-neutral-400">
         Don't have an account?{' '}
-        <Link to={ROUTES.REGISTER} className="font-semibold text-primary hover:text-accent transition-colors">
+        <Link to={ROUTES.REGISTER} className="font-semibold text-black dark:text-white hover:text-neutral-600 transition-colors">
           Sign up
         </Link>
       </p>

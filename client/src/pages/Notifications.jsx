@@ -81,7 +81,7 @@ const Notifications = () => {
                   </div>
                   <div className="flex-1 min-w-0 pt-1">
                     <div className="flex justify-between items-start">
-                      <h4 className={`text-base font-medium ${notif.read ? 'text-slate-300' : 'text-white'}`}>
+                      <h4 className={`text-base font-medium ${notif.read ? 'text-neutral-300' : 'text-white'}`}>
                         {notif.title}
                       </h4>
                       <div className="flex items-center space-x-3">

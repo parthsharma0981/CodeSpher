@@ -79,14 +79,14 @@ const OTPVerification = () => {
 
   return (
     <div className="w-full">
-      <Link to={ROUTES.FORGOT_PASSWORD} className="inline-flex items-center text-sm text-slate-500 hover:text-primary transition-colors mb-6">
+      <Link to={ROUTES.FORGOT_PASSWORD} className="inline-flex items-center text-sm text-neutral-500 hover:text-black dark:text-white transition-colors mb-6">
         <ArrowLeft className="w-4 h-4 mr-1" /> Back
       </Link>
       
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Verify OTP</h2>
-        <p className="text-slate-600 dark:text-slate-400">
-          We've sent a code to <br/><span className="font-medium text-slate-900 dark:text-slate-200">{email}</span>
+        <h2 className="text-3xl font-bold text-neutral-900 dark:text-white mb-2">Verify OTP</h2>
+        <p className="text-neutral-600 dark:text-neutral-400">
+          We've sent a code to <br/><span className="font-medium text-neutral-900 dark:text-neutral-200">{email}</span>
         </p>
       </div>
 
@@ -102,7 +102,7 @@ const OTPVerification = () => {
               value={digit}
               onChange={(e) => handleChange(e, index)}
               onKeyDown={(e) => handleKeyDown(e, index)}
-              className="w-10 h-12 sm:w-12 sm:h-14 text-center text-xl sm:text-2xl font-bold rounded-xl border border-slate-300 dark:border-slate-700 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all"
+              className="w-10 h-12 sm:w-12 sm:h-14 text-center text-xl sm:text-2xl font-bold rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white/50 dark:bg-neutral-900/50 backdrop-blur-sm text-neutral-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-neutral-400 focus:border-neutral-300 dark:border-neutral-700 transition-all"
             />
           ))}
         </div>
@@ -113,13 +113,13 @@ const OTPVerification = () => {
       </form>
 
       <div className="mt-6 text-center">
-        <p className="text-sm text-slate-600 dark:text-slate-400">
+        <p className="text-sm text-neutral-600 dark:text-neutral-400">
           Didn't receive the code?{' '}
           <button 
             type="button"
             onClick={handleResend}
             disabled={timeLeft > 0}
-            className={`font-semibold transition-colors ${timeLeft > 0 ? 'text-slate-400 cursor-not-allowed' : 'text-primary hover:text-accent'}`}
+            className={`font-semibold transition-colors ${timeLeft > 0 ? 'text-neutral-400 cursor-not-allowed' : 'text-black dark:text-white hover:text-neutral-600'}`}
           >
             {timeLeft > 0 ? `Resend in ${timeLeft}s` : 'Resend Code'}
           </button>

@@ -49,8 +49,8 @@ const ForgotPassword = () => {
         <div className="w-16 h-16 mx-auto bg-success/20 rounded-full flex items-center justify-center mb-6">
           <Mail className="w-8 h-8 text-success" />
         </div>
-        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Check your email</h2>
-        <p className="text-slate-600 dark:text-slate-400 mb-8">
+        <h2 className="text-2xl font-bold text-neutral-900 dark:text-white mb-4">Check your email</h2>
+        <p className="text-neutral-600 dark:text-neutral-400 mb-8">
           We've sent a 6-digit OTP to <strong>{email}</strong>. Please enter it on the next screen to reset your password.
         </p>
         <LoadingSpinner size="sm" className="mx-auto" />
@@ -60,13 +60,13 @@ const ForgotPassword = () => {
 
   return (
     <div className="w-full">
-      <Link to={ROUTES.LOGIN} className="inline-flex items-center text-sm text-slate-500 hover:text-primary transition-colors mb-6">
+      <Link to={ROUTES.LOGIN} className="inline-flex items-center text-sm text-neutral-500 hover:text-black dark:text-white transition-colors mb-6">
         <ArrowLeft className="w-4 h-4 mr-1" /> Back to login
       </Link>
       
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">Forgot Password</h2>
-        <p className="text-slate-600 dark:text-slate-400">
+        <h2 className="text-3xl font-bold text-neutral-900 dark:text-white mb-2">Forgot Password</h2>
+        <p className="text-neutral-600 dark:text-neutral-400">
           Enter your email address and we'll send you an OTP to reset your password.
         </p>
       </div>
@@ -96,7 +96,7 @@ const ForgotPassword = () => {
 
 // Local component for convenience, usually imported
 const LoadingSpinner = ({ size = 'md', className = '' }) => (
-  <div className={`animate-spin rounded-full border-b-2 border-primary ${size === 'sm' ? 'h-5 w-5' : 'h-8 w-8'} ${className}`}></div>
+  <div className={`animate-spin rounded-full border-b-2 border-neutral-300 dark:border-neutral-700 ${size === 'sm' ? 'h-5 w-5' : 'h-8 w-8'} ${className}`}></div>
 );
 
 export default ForgotPassword;

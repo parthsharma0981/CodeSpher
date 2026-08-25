@@ -92,7 +92,7 @@ const Dashboard = () => {
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-white mb-2">Welcome back, Developer! 👋</h1>
-        <p className="text-slate-400">Here's what's happening with your projects today.</p>
+        <p className="text-neutral-400">Here's what's happening with your projects today.</p>
       </div>
 
       {/* Stats Row */}
@@ -130,7 +130,7 @@ const Dashboard = () => {
                     transition={{ duration: 0.5, delay: i * 0.1 }}
                     className="w-full max-w-[40px] bg-gradient-to-t from-indigo-500/50 to-cyan-400 rounded-t-lg"
                   />
-                  <span className="text-xs text-slate-400 mt-2">{data.day}</span>
+                  <span className="text-xs text-neutral-400 mt-2">{data.day}</span>
                 </div>
               ))}
             </div>
@@ -163,8 +163,8 @@ const Dashboard = () => {
             <div className="flex gap-2 flex-wrap">
               {teamOnline.map((member, i) => (
                 <div key={i} className="relative">
-                  <img src={member.avatar} alt={member.name} className="w-10 h-10 rounded-full border-2 border-slate-900" />
-                  <span className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-slate-900 ${
+                  <img src={member.avatar} alt={member.name} className="w-10 h-10 rounded-full border-2 border-neutral-900" />
+                  <span className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-neutral-900 ${
                     member.status === 'online' ? 'bg-emerald-500' :
                     member.status === 'away' ? 'bg-amber-500' : 'bg-rose-500'
                   }`} />

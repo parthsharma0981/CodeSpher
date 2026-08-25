@@ -22,7 +22,7 @@ const Avatar = ({ src, name, size = 'md', isOnline = false, className = '' }) =>
     <div className="relative inline-block">
       <div 
         className={classNames(
-          "rounded-full flex items-center justify-center bg-gradient-to-br from-primary to-accent text-white font-medium ring-2 ring-white dark:ring-slate-900 overflow-hidden",
+          "rounded-full flex items-center justify-center bg-gradient-to-br from-black to-neutral-700 text-white font-medium ring-2 ring-white dark:ring-neutral-900 overflow-hidden",
           sizes[size],
           className
         )}
@@ -37,7 +37,7 @@ const Avatar = ({ src, name, size = 'md', isOnline = false, className = '' }) =>
       {isOnline && (
         <span 
           className={classNames(
-            "absolute bottom-0 right-0 rounded-full bg-success ring-2 ring-white dark:ring-slate-900 block",
+            "absolute bottom-0 right-0 rounded-full bg-success ring-2 ring-white dark:ring-neutral-900 block",
             onlineIndicatorSizes[size]
           )}
         />

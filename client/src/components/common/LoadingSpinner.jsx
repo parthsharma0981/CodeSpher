@@ -13,7 +13,7 @@ const LoadingSpinner = ({ size = 'md', className = '', fullScreen = false }) => 
   const spinner = (
     <Loader2 
       className={classNames(
-        "animate-spin text-primary", 
+        "animate-spin text-black dark:text-white", 
         sizes[size], 
         className
       )} 
@@ -22,7 +22,7 @@ const LoadingSpinner = ({ size = 'md', className = '', fullScreen = false }) => 
 
   if (fullScreen) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 dark:bg-black/80 backdrop-blur-sm">
         {spinner}
       </div>
     );

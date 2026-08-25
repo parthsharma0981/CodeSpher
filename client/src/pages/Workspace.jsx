@@ -87,12 +87,12 @@ const Workspace = () => {
               </div>
               <h1 className="text-3xl font-bold text-white">{workspace.name}</h1>
             </div>
-            <p className="text-slate-400 max-w-2xl">{workspace.description}</p>
+            <p className="text-neutral-400 max-w-2xl">{workspace.description}</p>
           </div>
           <div className="flex gap-4">
             <div className="bg-white/5 rounded-xl p-3 px-5 border border-white/10 text-center">
               <div className="text-2xl font-bold text-white">{workspace.memberCount}</div>
-              <div className="text-xs text-slate-400">Members</div>
+              <div className="text-xs text-neutral-400">Members</div>
             </div>
             <Button variant="primary" onClick={() => setActiveTab('settings')}>
               <Settings className="w-4 h-4 mr-2" />
@@ -112,7 +112,7 @@ const Workspace = () => {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`relative flex items-center px-5 py-2.5 rounded-xl text-sm font-medium transition-colors ${
-                isActive ? 'text-white' : 'text-slate-400 hover:text-white hover:bg-white/5'
+                isActive ? 'text-white' : 'text-neutral-400 hover:text-white hover:bg-white/5'
               }`}
             >
               {isActive && (
@@ -187,19 +187,19 @@ const Workspace = () => {
               
               <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 mb-8 space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">Workspace Name</label>
+                  <label className="block text-sm font-medium text-neutral-300 mb-2">Workspace Name</label>
                   <input 
                     type="text" 
                     defaultValue={workspace.name}
-                    className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-shadow"
+                    className="w-full bg-neutral-900/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-shadow"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">Description</label>
+                  <label className="block text-sm font-medium text-neutral-300 mb-2">Description</label>
                   <textarea 
                     defaultValue={workspace.description}
                     rows={4}
-                    className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-shadow resize-none"
+                    className="w-full bg-neutral-900/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-shadow resize-none"
                   />
                 </div>
                 <div className="flex justify-end">
@@ -214,7 +214,7 @@ const Workspace = () => {
                   </div>
                   <div>
                     <h3 className="text-lg font-bold text-white mb-1">Danger Zone</h3>
-                    <p className="text-sm text-slate-400 mb-4">
+                    <p className="text-sm text-neutral-400 mb-4">
                       Deleting this workspace will remove all associated projects, tasks, and files. This action cannot be undone.
                     </p>
                     <Button variant="danger">Delete Workspace</Button>

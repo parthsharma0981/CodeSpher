@@ -14,13 +14,13 @@ const Profile = () => {
         {/* Profile Header Info */}
         <div className="relative -mt-24 mb-8 flex flex-col sm:flex-row items-center sm:items-end sm:justify-between">
           <div className="flex flex-col sm:flex-row items-center sm:items-end text-center sm:text-left">
-            <div className="relative p-1 bg-slate-900 rounded-full">
+            <div className="relative p-1 bg-neutral-900 rounded-full">
               <img
                 src="https://i.pravatar.cc/300?u=dev"
                 alt="Profile"
-                className="w-36 h-36 rounded-full border-4 border-slate-900 object-cover bg-slate-800"
+                className="w-36 h-36 rounded-full border-4 border-neutral-900 object-cover bg-neutral-800"
               />
-              <div className="absolute bottom-4 right-4 w-5 h-5 bg-emerald-500 rounded-full border-4 border-slate-900"></div>
+              <div className="absolute bottom-4 right-4 w-5 h-5 bg-emerald-500 rounded-full border-4 border-neutral-900"></div>
             </div>
             <div className="mt-4 sm:mt-0 sm:ml-6 pb-2">
               <h1 className="text-3xl font-bold">Alex Developer</h1>
@@ -174,7 +174,7 @@ const Profile = () => {
                   { text: 'Commented on PR #142', time: 'Oct 12', type: 'comment' },
                 ].map((act, i) => (
                   <div key={i} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white/10 bg-slate-900 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 text-indigo-400">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white/10 bg-neutral-900 shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 text-indigo-400">
                       {act.type === 'code' ? <Github size={16}/> : act.type === 'task' ? <CheckCircle size={16}/> : <MessageCircle size={16}/>}
                     </div>
                     <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white/5 border border-white/10 p-4 rounded-xl shadow backdrop-blur-sm group-hover:bg-white/10 transition-colors">

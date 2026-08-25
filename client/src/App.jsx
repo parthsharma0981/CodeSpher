@@ -34,15 +34,15 @@ import Toast from './components/common/Toast';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
-  
+
   if (loading) {
     return <LoadingSpinner fullScreen />;
   }
-  
+
   if (!isAuthenticated) {
     return <Navigate to={ROUTES.LOGIN} replace />;
   }
-  
+
   return children;
 };
 
@@ -60,7 +60,7 @@ function App() {
         <Routes>
           {/* Public Route */}
           <Route path={ROUTES.HOME} element={<LandingPage />} />
-          
+
           {/* Auth Routes */}
           <Route element={<AuthLayout />}>
             <Route path={ROUTES.LOGIN} element={<Login />} />
@@ -69,9 +69,9 @@ function App() {
             <Route path={ROUTES.VERIFY_OTP} element={<OTPVerification />} />
             <Route path={ROUTES.RESET_PASSWORD} element={<ResetPassword />} />
           </Route>
-          
+
           {/* Protected Dashboard Routes */}
-          <Route 
+          <Route
             element={
               <ProtectedRoute>
                 <DashboardLayout />
@@ -80,7 +80,10 @@ function App() {
           >
             <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
             <Route path={ROUTES.WORKSPACES} element={<Workspace />} />
-            <Route path={ROUTES.WORKSPACE_DETAIL} element={<WorkspaceDetail />} />
+            <Route
+              path={ROUTES.WORKSPACE_DETAIL}
+              element={<WorkspaceDetail />}
+            />
             <Route path={ROUTES.PROJECTS} element={<Project />} />
             <Route path={ROUTES.PROJECT_DETAIL} element={<Project />} />
             <Route path={ROUTES.TASK_BOARD} element={<TaskBoard />} />
@@ -95,7 +98,7 @@ function App() {
           </Route>
 
           {/* 404 Route */}
-          <Route path="*" element={<NotFound />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </>

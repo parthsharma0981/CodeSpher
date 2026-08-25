@@ -80,16 +80,16 @@ const Project = () => {
               <span className="px-3 py-1 bg-amber-500/20 text-amber-400 rounded-full text-xs font-medium border border-amber-500/20">
                 {project.status}
               </span>
-              <span className="flex items-center text-sm text-slate-400">
+              <span className="flex items-center text-sm text-neutral-400">
                 <Clock className="w-4 h-4 mr-1.5" />
                 Due {project.deadline}
               </span>
             </div>
             <h1 className="text-3xl font-bold text-white mb-2">{project.name}</h1>
-            <p className="text-slate-400 max-w-2xl">{project.description}</p>
+            <p className="text-neutral-400 max-w-2xl">{project.description}</p>
           </div>
 
-          <div className="flex items-center gap-8 bg-slate-900/50 p-6 rounded-2xl border border-white/5">
+          <div className="flex items-center gap-8 bg-neutral-900/50 p-6 rounded-2xl border border-white/5">
             {/* Progress Circle */}
             <div className="relative w-20 h-20 flex items-center justify-center">
               <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
@@ -113,7 +113,7 @@ const Project = () => {
             
             <div className="flex -space-x-3">
               {project.members.map((member, i) => (
-                <div key={i} className="w-10 h-10 rounded-full border-2 border-slate-900 overflow-hidden bg-slate-700">
+                <div key={i} className="w-10 h-10 rounded-full border-2 border-neutral-900 overflow-hidden bg-neutral-700">
                   <img src={member.avatar} alt={member.name} className="w-full h-full object-cover" />
                 </div>
               ))}
@@ -132,7 +132,7 @@ const Project = () => {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`relative flex items-center px-5 py-2.5 rounded-xl text-sm font-medium transition-colors whitespace-nowrap ${
-                isActive ? 'text-white' : 'text-slate-400 hover:text-white hover:bg-white/5'
+                isActive ? 'text-white' : 'text-neutral-400 hover:text-white hover:bg-white/5'
               }`}
             >
               {isActive && (
@@ -171,7 +171,7 @@ const Project = () => {
                 <section className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6">
                   <h2 className="text-lg font-bold text-white mb-4">Quick Links</h2>
                   <div className="space-y-2">
-                    <Link to={`/projects/${id || 'proj-1'}/board`} className="flex items-center p-3 rounded-xl hover:bg-white/5 text-slate-300 transition-colors border border-transparent hover:border-white/10">
+                    <Link to={`/projects/${id || 'proj-1'}/board`} className="flex items-center p-3 rounded-xl hover:bg-white/5 text-neutral-300 transition-colors border border-transparent hover:border-white/10">
                       <Trello className="w-5 h-5 mr-3 text-indigo-400" />
                       Go to Task Board
                     </Link>
@@ -183,9 +183,9 @@ const Project = () => {
 
           {activeTab === 'board' && (
             <div className="text-center py-20 bg-white/5 rounded-3xl border border-white/10">
-              <Trello className="w-16 h-16 text-slate-600 mx-auto mb-4" />
+              <Trello className="w-16 h-16 text-neutral-600 mx-auto mb-4" />
               <h2 className="text-2xl font-bold text-white mb-2">Kanban Board</h2>
-              <p className="text-slate-400 mb-6 max-w-md mx-auto">Track tasks, manage workflows, and collaborate with your team visually.</p>
+              <p className="text-neutral-400 mb-6 max-w-md mx-auto">Track tasks, manage workflows, and collaborate with your team visually.</p>
               <Link to={`/projects/${id || 'proj-1'}/board`}>
                 <Button variant="primary">Open Full Board</Button>
               </Link>
@@ -226,19 +226,19 @@ const Project = () => {
               
               <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 mb-8 space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">Project Name</label>
+                  <label className="block text-sm font-medium text-neutral-300 mb-2">Project Name</label>
                   <input 
                     type="text" 
                     defaultValue={project.name}
-                    className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-shadow"
+                    className="w-full bg-neutral-900/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-shadow"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">Description</label>
+                  <label className="block text-sm font-medium text-neutral-300 mb-2">Description</label>
                   <textarea 
                     defaultValue={project.description}
                     rows={4}
-                    className="w-full bg-slate-900/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-shadow resize-none"
+                    className="w-full bg-neutral-900/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-shadow resize-none"
                   />
                 </div>
                 <div className="flex justify-end">
