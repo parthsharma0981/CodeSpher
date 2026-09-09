@@ -150,7 +150,7 @@ codesphere/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/codesphere.git
+   git clone https://github.com/parthsharma0981/codesphere.git
    cd codesphere
    ```
 
