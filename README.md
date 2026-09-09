@@ -1,4 +1,4 @@
-# 🚀 CodeSphere — Developer Collaboration Platform
+#  CodeSphere — Developer Collaboration Platform
 
 <div align="center">
 
@@ -19,7 +19,7 @@
 
 ---
 
-## 📋 About
+##  About
 
 **CodeSphere** is a comprehensive full-stack developer collaboration platform that brings together the best features of **GitHub**, **Trello**, **Discord**, and **Notion** into one unified workspace. It empowers teams to plan projects, manage tasks with Kanban boards, communicate in real-time, share files, and track productivity — all from a single, beautifully designed interface.
 
@@ -27,53 +27,53 @@ Built as a production-grade MERN stack application with real-time WebSocket comm
 
 ---
 
-## ✨ Features
+##  Features
 
-### 🏠 Dashboard
+###  Dashboard
 - Active projects overview with progress tracking
 - Tasks due today & assigned tasks widgets
 - Team members online (real-time)
 - Weekly productivity chart
 - Recent activity timeline
 
-### 📋 Kanban Task Board
+###  Kanban Task Board
 - **6-column workflow**: Backlog → To Do → In Progress → Review → Testing → Completed
 - Drag-and-drop task cards between columns
 - Task details: priority, labels, checklists, time tracking, comments, attachments
 - Quick inline task creation
 
-### 💬 Real-time Chat
+###  Real-time Chat
 - Private 1:1 messaging & team channels
 - Typing indicators & online presence
 - File sharing with image preview
 - Read receipts & emoji support
 - Message search
 
-### 📁 Workspace Management
+###  Workspace Management
 - Create & manage team workspaces
 - Invite/remove members with role-based access
 - Workspace-level files, calendar & settings
 - **Roles**: Guest, Member, Admin
 
-### 📊 Analytics Dashboard
+###  Analytics Dashboard
 - Tasks completed over time
 - Team contribution charts
 - Productivity metrics & scores
 - Project completion tracking
 - Weekly activity heatmap
 
-### 📅 Calendar
+###  Calendar
 - Monthly/weekly/daily views
 - Deadline tracking & meeting events
 - Personal reminders & holidays
 - Color-coded event types
 
-### 🔔 Notification System
+###  Notification System
 - Real-time push notifications via WebSocket
 - Task assigned, completed, comments, deadlines, member events
 - Mark read/unread with filter options
 
-### 🔐 Authentication & Security
+###  Authentication & Security
 - JWT-based authentication (access + refresh tokens)
 - Email verification with OTP
 - Password reset flow
@@ -82,7 +82,7 @@ Built as a production-grade MERN stack application with real-time WebSocket comm
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 ### Frontend
 | Technology | Purpose |
@@ -96,7 +96,7 @@ Built as a production-grade MERN stack application with real-time WebSocket comm
 | Lucide React | Beautiful icon library |
 | Socket.IO Client | Real-time communication |
 
-### Backend
+### Backend   not yet done
 | Technology | Purpose |
 |-----------|---------|
 | Node.js + Express | REST API server |
@@ -110,7 +110,7 @@ Built as a production-grade MERN stack application with real-time WebSocket comm
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 codesphere/
@@ -132,16 +132,7 @@ codesphere/
 │   └── vite.config.js
 │
 ├── server/                      # Express Backend
-│   ├── src/
-│   │   ├── config/              # DB, Cloudinary, Email configs
-│   │   ├── controllers/         # 9 route controllers
-│   │   ├── middleware/           # Auth, RBAC, validation, error handling
-│   │   ├── models/              # 11 Mongoose models
-│   │   ├── routes/              # 9 API route files
-│   │   ├── services/            # Auth, email, file services
-│   │   ├── sockets/             # Socket.IO handlers
-│   │   └── utils/               # ApiError, logger, helpers
-│   └── .env.example
+                                # next part to do
 │
 └── .gitignore
 ```
@@ -206,7 +197,7 @@ codesphere/
 
 ---
 
-## 🎨 Design System
+##  Design System
 
 | Element | Value |
 |---------|-------|
@@ -222,7 +213,7 @@ codesphere/
 
 ---
 
-## 📡 API Endpoints
+##  API Endpoints
 
 | Module | Method | Endpoint | Auth |
 |--------|--------|----------|------|
@@ -270,7 +261,7 @@ codesphere/
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 Contributions are welcome! Please follow these steps:
 
@@ -282,24 +273,6 @@ Contributions are welcome! Please follow these steps:
 
 ---
 
-## 📄 License
 
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
-
----
-
-## 👤 Author
-
-**Your Name**
-- GitHub: [@your-username](https://github.com/your-username)
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/your-profile)
-
----
-
-<div align="center">
-
-**⭐ Star this repo if you found it helpful!**
-
-Made with ❤️ and lots of ☕
 
 </div>
