@@ -301,4 +301,26 @@ export const userService = {
   },
 };
 
+// ─── File Service ────────────────────────────────────────────────────────────
+export const fileService = {
+  upload: async (formData) => {
+    const res = await api.post('/files/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return res.data;
+  },
+
+  getAll: async (params) => {
+    const res = await api.get('/files', { params });
+    return res.data;
+  },
+
+  delete: async (id) => {
+    const res = await api.delete(`/files/${id}`);
+    return res.data;
+  },
+};
+
 export default api;

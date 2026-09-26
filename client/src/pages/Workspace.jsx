@@ -5,7 +5,7 @@ import ProjectCard from '../components/dashboard/ProjectCard';
 import MemberCard from '../components/workspace/MemberCard';
 import FileCard from '../components/workspace/FileCard';
 import Button from '../components/common/Button';
-import { workspaceService, projectService } from '../services/api';
+import { workspaceService, projectService, fileService } from '../services/api';
 import toast from 'react-hot-toast';
 
 // Modals
@@ -109,6 +109,7 @@ const Workspace = ({ workspaceId }) => {
   const [showProjectModal, setShowProjectModal] = useState(false);
   const [showMemberModal, setShowMemberModal] = useState(false);
   const [showFileModal, setShowFileModal] = useState(false);
+  const [isUploadingFile, setIsUploadingFile] = useState(false);
 
   useEffect(() => {
     const fetchWorkspaceData = async () => {
@@ -126,6 +127,26 @@ const Workspace = ({ workspaceId }) => {
         const projRes = await projectService.getAll(workspaceId);
         if (projRes?.data && projRes.data.length > 0) {
           setWorkspace((prev) => ({ ...prev, projects: projRes.data }));
+        }
+
+        const filesRes = await fileService.getAll({ workspaceId });
+        if (filesRes?.data && filesRes.data.length > 0) {
+          const apiFiles = filesRes.data.map((f) => ({
+            id: f._id,
+            name: f.name,
+            url: f.url,
+            type: f.type?.includes('pdf') ? 'pdf' : f.type?.includes('zip') ? 'zip' : f.type?.includes('image') ? 'png' : 'doc',
+            size: (f.size / (1024 * 1024)).toFixed(1) + ' MB',
+            date: new Date(f.createdAt).toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' }),
+            uploadedBy: {
+              name: f.uploadedBy?.name || 'You',
+              avatar: f.uploadedBy?.avatar || 'https://i.pravatar.cc/150',
+            },
+          }));
+          setWorkspace((prev) => ({
+            ...prev,
+            files: [...apiFiles, ...initialWorkspace.files.filter((initF) => !apiFiles.some((af) => af.name === initF.name))],
+          }));
         }
       } catch (err) {
         // Keeps state intact if offline
@@ -180,13 +201,49 @@ const Workspace = ({ workspaceId }) => {
     setShowMemberModal(false);
   };
 
-  const handleUploadFile = (newFile) => {
+  const handleUploadFile = async (selectedFile, metadata) => {
+    setIsUploadingFile(true);
+    try {
+      if (selectedFile) {
+        const formData = new FormData();
+        formData.append('file', selectedFile);
+        if (workspaceId) formData.append('workspaceId', workspaceId);
+
+        const res = await fileService.upload(formData);
+        if (res?.data) {
+          const uploaded = {
+            id: res.data._id,
+            name: res.data.name,
+            url: res.data.url,
+            type: metadata.type,
+            size: (res.data.size / (1024 * 1024)).toFixed(1) + ' MB',
+            date: new Date().toLocaleDateString([], { month: 'short', day: 'numeric', year: 'numeric' }),
+            uploadedBy: {
+              name: res.data.uploadedBy?.name || 'You',
+              avatar: res.data.uploadedBy?.avatar || 'https://i.pravatar.cc/150',
+            },
+          };
+          setWorkspace((prev) => ({
+            ...prev,
+            files: [uploaded, ...prev.files],
+          }));
+          toast.success('File uploaded to Cloudinary successfully!');
+          setShowFileModal(false);
+          setIsUploadingFile(false);
+          return;
+        }
+      }
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Cloud upload failed. File added locally.');
+    }
+
     setWorkspace((prev) => ({
       ...prev,
-      files: [newFile, ...prev.files],
+      files: [metadata, ...prev.files],
     }));
-    toast.success('File uploaded successfully!');
+    toast.success('File added!');
     setShowFileModal(false);
+    setIsUploadingFile(false);
   };
 
   return (
@@ -393,6 +450,7 @@ const Workspace = ({ workspaceId }) => {
         isOpen={showFileModal}
         onClose={() => setShowFileModal(false)}
         onSubmit={handleUploadFile}
+        isUploading={isUploadingFile}
       />
     </div>
   );

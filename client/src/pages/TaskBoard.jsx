@@ -122,9 +122,15 @@ const TaskBoard = () => {
   const [selectedTask, setSelectedTask] = useState(null);
   const [activeId, setActiveId] = useState(null);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [createTaskStatus, setCreateTaskStatus] = useState('todo');
   const [showFilters, setShowFilters] = useState(false);
   const [filterPriority, setFilterPriority] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
+
+  const handleOpenCreateModal = (status = 'todo') => {
+    setCreateTaskStatus(status);
+    setShowCreateModal(true);
+  };
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
@@ -327,7 +333,7 @@ const TaskBoard = () => {
           <Button
             variant="primary"
             size="sm"
-            onClick={() => setShowCreateModal(true)}
+            onClick={() => handleOpenCreateModal('todo')}
           >
             + New Task
           </Button>
@@ -350,6 +356,7 @@ const TaskBoard = () => {
                 column={column}
                 tasks={filteredTasks.filter((t) => t.status === column.id)}
                 onTaskClick={setSelectedTask}
+                onAddTask={handleOpenCreateModal}
               />
             ))}
           </div>
@@ -371,6 +378,7 @@ const TaskBoard = () => {
         isOpen={showCreateModal}
         onClose={() => setShowCreateModal(false)}
         onSubmit={handleCreateTask}
+        initialStatus={createTaskStatus}
       />
     </div>
   );
