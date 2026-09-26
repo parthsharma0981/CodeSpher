@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Lock, User, Github } from 'lucide-react';
+import { Mail, Lock, User } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { ROUTES } from '../utils/constants';
 import { validateEmail, validatePassword, validateName } from '../utils/validators';
@@ -9,167 +9,167 @@ import Button from '../components/common/Button';
 import toast from 'react-hot-toast';
 
 const Register = () => {
- const [formData, setFormData] = useState({ name: '', email: '', password: '', confirmPassword: '' });
- const [errors, setErrors] = useState({});
- const [isLoading, setIsLoading] = useState(false);
- const [passwordStrength, setPasswordStrength] = useState({ strength: 0, message: '' });
- const [termsAccepted, setTermsAccepted] = useState(false);
- 
- const { register } = useAuth();
- const navigate = useNavigate();
+  const [formData, setFormData] = useState({ name: '', email: '', password: '', confirmPassword: '' });
+  const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState({ strength: 0, message: '' });
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
- const handleChange = (e) => {
- const { id, value } = e.target;
- setFormData({ ...formData, [id]: value });
- 
- if (errors[id]) {
- setErrors({ ...errors, [id]: null });
- }
+  const { register } = useAuth();
+  const navigate = useNavigate();
 
- if (id === 'password') {
- setPasswordStrength(validatePassword(value));
- }
- };
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
 
- const validate = () => {
- const newErrors = {};
- if (!validateName(formData.name)) newErrors.name = 'Name must be at least 2 characters';
- if (!validateEmail(formData.email)) newErrors.email = 'Invalid email address';
- if (!passwordStrength.isValid) newErrors.password = 'Password must be at least 8 characters';
- if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = 'Passwords do not match';
- if (!termsAccepted) newErrors.terms = 'You must accept the terms and conditions';
- 
- setErrors(newErrors);
- return Object.keys(newErrors).length === 0;
- };
+    if (errors[id]) {
+      setErrors({ ...errors, [id]: null });
+    }
 
- const handleSubmit = async (e) => {
- e.preventDefault();
- if (!validate()) return;
+    if (id === 'password') {
+      setPasswordStrength(validatePassword(value));
+    }
+  };
 
- setIsLoading(true);
- try {
- await register({
- name: formData.name,
- email: formData.email,
- password: formData.password
- });
- toast.success('Registration successful! Please login.');
- navigate(ROUTES.LOGIN);
- } catch (error) {
- toast.error(error.response?.data?.message || 'Registration failed. Please try again.');
- } finally {
- setIsLoading(false);
- }
- };
+  const validate = () => {
+    const newErrors = {};
+    if (!validateName(formData.name)) newErrors.name = 'Name must be at least 2 characters';
+    if (!validateEmail(formData.email)) newErrors.email = 'Invalid email address';
+    if (!passwordStrength.isValid) newErrors.password = 'Password must be at least 8 characters';
+    if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = 'Passwords do not match';
+    if (!termsAccepted) newErrors.terms = 'You must accept the terms and conditions';
 
- const strengthColors = ['bg-neutral-200', 'bg-red-600', 'bg-warning', 'bg-blue-500', 'bg-success'];
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
- return (
- <div className="w-full">
- <div className="text-center mb-8">
- <h2 className="text-3xl font-bold text-neutral-900 dark:text-white mb-2">Create an account</h2>
- <p className="text-neutral-600 dark:text-neutral-400">Join CodeSphere and start collaborating today.</p>
- </div>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
 
- <form onSubmit={handleSubmit} className="space-y-4">
- <Input
- id="name"
- label="Full Name"
- placeholder="John Doe"
- leftIcon={User}
- value={formData.name}
- onChange={handleChange}
- error={errors.name}
- />
- 
- <Input
- id="email"
- label="Email Address"
- type="email"
- placeholder="john@example.com"
- leftIcon={Mail}
- value={formData.email}
- onChange={handleChange}
- error={errors.email}
- />
- 
- <div>
- <Input
- id="password"
- label="Password"
- type="password"
- placeholder="Create a strong password"
- leftIcon={Lock}
- value={formData.password}
- onChange={handleChange}
- error={errors.password}
- />
- {formData.password && (
- <div className="mt-2">
- <div className="flex justify-between items-center mb-1">
- <span className="text-xs text-neutral-500">Password strength:</span>
- <span className="text-xs font-medium text-neutral-700 dark:text-neutral-300">{passwordStrength.message}</span>
- </div>
- <div className="flex gap-1 h-1.5 w-full">
- {[1, 2, 3, 4].map((level) => (
- <div 
- key={level} 
- className={`h-full flex-1 rounded-full transition-colors duration-300 ${
- level <= passwordStrength.strength ? strengthColors[passwordStrength.strength] : 'bg-neutral-200 dark:bg-neutral-700'
- }`}
- />
- ))}
- </div>
- </div>
- )}
- </div>
+    setIsLoading(true);
+    try {
+      await register({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      });
+      toast.success('Registration successful! Please verify your email.');
+      navigate(ROUTES.VERIFY_OTP, { state: { email: formData.email } });
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Registration failed. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
- <Input
- id="confirmPassword"
- label="Confirm Password"
- type="password"
- placeholder="Confirm your password"
- leftIcon={Lock}
- value={formData.confirmPassword}
- onChange={handleChange}
- error={errors.confirmPassword}
- />
+  const strengthColors = ['bg-neutral-200', 'bg-red-600', 'bg-amber-500', 'bg-blue-500', 'bg-emerald-600'];
 
- <div className="flex items-start mt-2">
- <input 
- id="terms"
- type="checkbox" 
- checked={termsAccepted}
- onChange={(e) => {
- setTermsAccepted(e.target.checked);
- if (errors.terms) setErrors({ ...errors, terms: null });
- }}
- className="mt-1 rounded border-neutral-300 text-black dark:text-white focus:ring-neutral-400 dark:border-neutral-700 dark:bg-neutral-900" 
- />
- <div className="ml-2">
- <label htmlFor="terms" className="text-sm text-neutral-600 dark:text-neutral-400">
- I accept the <a href="#" className="text-black dark:text-white hover:underline">Terms of Service</a> and <a href="#" className="text-black dark:text-white hover:underline">Privacy Policy</a>
- </label>
- {errors.terms && <p className="mt-1 text-xs text-red-600">{errors.terms}</p>}
- </div>
- </div>
+  return (
+    <div className="w-full">
+      <div className="text-center mb-8">
+        <h2 className="text-3xl font-bold text-neutral-900 dark:text-white mb-2">Create an account</h2>
+        <p className="text-neutral-500">Join CodeSphere and start collaborating today.</p>
+      </div>
 
- <Button type="submit" fullWidth isLoading={isLoading} className="mt-2">
- Create Account
- </Button>
- </form>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <Input
+          id="name"
+          label="Full Name"
+          placeholder="John Doe"
+          leftIcon={User}
+          value={formData.name}
+          onChange={handleChange}
+          error={errors.name}
+        />
 
- <div className="mt-6 text-center">
- <p className="text-sm text-neutral-600 dark:text-neutral-400">
- Already have an account?{' '}
- <Link to={ROUTES.LOGIN} className="font-semibold text-black dark:text-white hover:text-neutral-600 transition-colors">
- Log in
- </Link>
- </p>
- </div>
- </div>
- );
+        <Input
+          id="email"
+          label="Email Address"
+          type="email"
+          placeholder="john@example.com"
+          leftIcon={Mail}
+          value={formData.email}
+          onChange={handleChange}
+          error={errors.email}
+        />
+
+        <div>
+          <Input
+            id="password"
+            label="Password"
+            type="password"
+            placeholder="Create a strong password"
+            leftIcon={Lock}
+            value={formData.password}
+            onChange={handleChange}
+            error={errors.password}
+          />
+          {formData.password && (
+            <div className="mt-2">
+              <div className="flex justify-between items-center mb-1">
+                <span className="text-xs text-neutral-500">Password strength:</span>
+                <span className="text-xs font-medium text-neutral-700 dark:text-neutral-300">{passwordStrength.message}</span>
+              </div>
+              <div className="flex gap-1 h-1.5 w-full">
+                {[1, 2, 3, 4].map((level) => (
+                  <div
+                    key={level}
+                    className={`h-full flex-1 rounded-full transition-colors duration-300 ${
+                      level <= passwordStrength.strength ? strengthColors[passwordStrength.strength] : 'bg-neutral-200 dark:bg-neutral-700'
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <Input
+          id="confirmPassword"
+          label="Confirm Password"
+          type="password"
+          placeholder="Confirm your password"
+          leftIcon={Lock}
+          value={formData.confirmPassword}
+          onChange={handleChange}
+          error={errors.confirmPassword}
+        />
+
+        <div className="flex items-start mt-2">
+          <input
+            id="terms"
+            type="checkbox"
+            checked={termsAccepted}
+            onChange={(e) => {
+              setTermsAccepted(e.target.checked);
+              if (errors.terms) setErrors({ ...errors, terms: null });
+            }}
+            className="mt-1 rounded border-neutral-300 text-black dark:text-white focus:ring-neutral-400 dark:border-neutral-700 dark:bg-neutral-900"
+          />
+          <div className="ml-2">
+            <label htmlFor="terms" className="text-sm text-neutral-600 dark:text-neutral-400">
+              I accept the <a href="#" className="text-black dark:text-white hover:underline font-medium">Terms of Service</a> and <a href="#" className="text-black dark:text-white hover:underline font-medium">Privacy Policy</a>
+            </label>
+            {errors.terms && <p className="mt-1 text-xs text-red-600">{errors.terms}</p>}
+          </div>
+        </div>
+
+        <Button type="submit" fullWidth isLoading={isLoading} className="mt-2">
+          Create Account
+        </Button>
+      </form>
+
+      <div className="mt-6 text-center">
+        <p className="text-sm text-neutral-600 dark:text-neutral-400">
+          Already have an account?{' '}
+          <Link to={ROUTES.LOGIN} className="font-semibold text-neutral-900 dark:text-white hover:underline">
+            Log in
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
 };
 
 export default Register;

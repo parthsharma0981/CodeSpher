@@ -2,157 +2,298 @@ import axios from 'axios';
 import { API_URL } from '../utils/constants';
 
 const api = axios.create({
- baseURL: API_URL,
- headers: {
- 'Content-Type': 'application/json',
- },
+  baseURL: API_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  withCredentials: true,
 });
 
 api.interceptors.request.use(
- (config) => {
- const token = localStorage.getItem('token');
- if (token) {
- config.headers.Authorization = `Bearer ${token}`;
- }
- return config;
- },
- (error) => Promise.reject(error)
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
 );
 
 api.interceptors.response.use(
- (response) => response,
- (error) => {
- if (error.response && error.response.status === 401) {
- localStorage.removeItem('token');
- window.location.href = '/login';
- }
- return Promise.reject(error);
- }
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401 && !window.location.pathname.includes('/login')) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = '/login';
+    }
+    return Promise.reject(error);
+  }
 );
 
 // ─── Auth Service ────────────────────────────────────────────────────────────
 export const authService = {
- login: async (credentials) => {
- // Mock for Phase 1 (uncomment api.post for real backend)
- return new Promise((resolve) => {
- setTimeout(() => {
- resolve({ data: { token: 'mock-jwt-token', user: { id: 1, name: 'John Doe', email: credentials.email, role: 'ADMIN' } } });
- }, 1500);
- });
- // return api.post('/auth/login', credentials);
- },
- register: async (userData) => {
- // Mock for Phase 1
- return new Promise((resolve) => {
- setTimeout(() => {
- resolve({ data: { message: 'Registration successful' } });
- }, 1500);
- });
- // return api.post('/auth/register', userData);
- },
- forgotPassword: async (email) => {
- // Mock for Phase 1
- return new Promise((resolve) => setTimeout(() => resolve({ data: { message: 'OTP sent' } }), 1000));
- // return api.post('/auth/forgot-password', { email });
- },
- verifyOTP: async (data) => {
- // Mock
- return new Promise((resolve) => setTimeout(() => resolve({ data: { message: 'OTP verified', token: 'reset-token' } }), 1000));
- // return api.post('/auth/verify-otp', data);
- },
- resetPassword: async (data) => {
- // Mock
- return new Promise((resolve) => setTimeout(() => resolve({ data: { message: 'Password reset successful' } }), 1000));
- // return api.post('/auth/reset-password', data);
- },
- getMe: async () => {
- return api.get('/auth/me');
- }
-};
+  login: async (credentials) => {
+    const res = await api.post('/auth/login', credentials);
+    return res.data;
+  },
 
-// ─── User Service ────────────────────────────────────────────────────────────
-export const userService = {
- getProfile: async () => api.get('/users/profile'),
- updateProfile: async (data) => api.put('/users/profile', data),
- updateAvatar: async (formData) => api.put('/users/avatar', formData, {
- headers: { 'Content-Type': 'multipart/form-data' }
- }),
- changePassword: async (data) => api.put('/users/password', data),
- getAllUsers: async () => api.get('/users'),
- getUserById: async (id) => api.get(`/users/${id}`),
- deleteUser: async (id) => api.delete(`/users/${id}`),
- updateUserRole: async (id, role) => api.put(`/users/${id}/role`, { role }),
+  register: async (userData) => {
+    const res = await api.post('/auth/register', userData);
+    return res.data;
+  },
+
+  verifyOTP: async (data) => {
+    const res = await api.post('/auth/verify-otp', data);
+    return res.data;
+  },
+
+  forgotPassword: async (email) => {
+    const res = await api.post('/auth/forgot-password', { email });
+    return res.data;
+  },
+
+  resetPassword: async (data) => {
+    const res = await api.post('/auth/reset-password', data);
+    return res.data;
+  },
+
+  logout: async () => {
+    try {
+      await api.post('/auth/logout');
+    } catch {}
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+  },
+
+  getMe: async () => {
+    const res = await api.get('/users/me');
+    return res.data;
+  },
 };
 
 // ─── Workspace Service ───────────────────────────────────────────────────────
 export const workspaceService = {
- getAll: async () => api.get('/workspaces'),
- getById: async (id) => api.get(`/workspaces/${id}`),
- create: async (data) => api.post('/workspaces', data),
- update: async (id, data) => api.put(`/workspaces/${id}`, data),
- delete: async (id) => api.delete(`/workspaces/${id}`),
- addMember: async (id, userId) => api.post(`/workspaces/${id}/members`, { userId }),
- removeMember: async (id, userId) => api.delete(`/workspaces/${id}/members/${userId}`),
- getMembers: async (id) => api.get(`/workspaces/${id}/members`),
+  getAll: async () => {
+    const res = await api.get('/workspaces');
+    return res.data;
+  },
+
+  getById: async (id) => {
+    const res = await api.get(`/workspaces/${id}`);
+    return res.data;
+  },
+
+  create: async (data) => {
+    const res = await api.post('/workspaces', data);
+    return res.data;
+  },
+
+  update: async (id, data) => {
+    const res = await api.put(`/workspaces/${id}`, data);
+    return res.data;
+  },
+
+  delete: async (id) => {
+    const res = await api.delete(`/workspaces/${id}`);
+    return res.data;
+  },
+
+  getMembers: async (id) => {
+    const res = await api.get(`/workspaces/${id}/members`);
+    return res.data;
+  },
+
+  inviteMember: async (id, data) => {
+    const res = await api.post(`/workspaces/${id}/invite`, data);
+    return res.data;
+  },
+
+  removeMember: async (workspaceId, userId) => {
+    const res = await api.delete(`/workspaces/${workspaceId}/members/${userId}`);
+    return res.data;
+  },
 };
 
 // ─── Project Service ─────────────────────────────────────────────────────────
 export const projectService = {
- getAll: async (workspaceId) => api.get('/projects', { params: { workspaceId } }),
- getById: async (id) => api.get(`/projects/${id}`),
- create: async (data) => api.post('/projects', data),
- update: async (id, data) => api.put(`/projects/${id}`, data),
- delete: async (id) => api.delete(`/projects/${id}`),
- addMember: async (id, userId) => api.post(`/projects/${id}/members`, { userId }),
- removeMember: async (id, userId) => api.delete(`/projects/${id}/members/${userId}`),
+  getAll: async (workspaceId) => {
+    const url = workspaceId ? `/projects/workspace/${workspaceId}` : '/projects';
+    const res = await api.get(url);
+    return res.data;
+  },
+
+  getById: async (id) => {
+    const res = await api.get(`/projects/${id}`);
+    return res.data;
+  },
+
+  create: async (data) => {
+    const res = await api.post('/projects', data);
+    return res.data;
+  },
+
+  update: async (id, data) => {
+    const res = await api.put(`/projects/${id}`, data);
+    return res.data;
+  },
+
+  delete: async (id) => {
+    const res = await api.delete(`/projects/${id}`);
+    return res.data;
+  },
+
+  addMember: async (id, userId) => {
+    const res = await api.post(`/projects/${id}/members`, { userId });
+    return res.data;
+  },
+
+  removeMember: async (id, userId) => {
+    const res = await api.delete(`/projects/${id}/members/${userId}`);
+    return res.data;
+  },
 };
 
 // ─── Task Service ────────────────────────────────────────────────────────────
 export const taskService = {
- getAll: async (params) => api.get('/tasks', { params }),
- getById: async (id) => api.get(`/tasks/${id}`),
- create: async (data) => api.post('/tasks', data),
- update: async (id, data) => api.put(`/tasks/${id}`, data),
- delete: async (id) => api.delete(`/tasks/${id}`),
- updateStatus: async (id, status) => api.patch(`/tasks/${id}/status`, { status }),
- assignUser: async (id, userId) => api.patch(`/tasks/${id}/assign`, { userId }),
- addComment: async (id, content) => api.post(`/tasks/${id}/comments`, { content }),
- getComments: async (id) => api.get(`/tasks/${id}/comments`),
- addAttachment: async (id, formData) => api.post(`/tasks/${id}/attachments`, formData, {
- headers: { 'Content-Type': 'multipart/form-data' }
- }),
+  getAll: async (projectId) => {
+    const url = projectId ? `/tasks/project/${projectId}` : '/tasks';
+    const res = await api.get(url);
+    return res.data;
+  },
+
+  getById: async (id) => {
+    const res = await api.get(`/tasks/${id}`);
+    return res.data;
+  },
+
+  create: async (data) => {
+    const res = await api.post('/tasks', data);
+    return res.data;
+  },
+
+  update: async (id, data) => {
+    const res = await api.put(`/tasks/${id}`, data);
+    return res.data;
+  },
+
+  updateStatus: async (id, status, order) => {
+    const res = await api.put(`/tasks/${id}/status`, { status, order });
+    return res.data;
+  },
+
+  assign: async (id, userId) => {
+    const res = await api.put(`/tasks/${id}/assign`, { userId });
+    return res.data;
+  },
+
+  addComment: async (id, content) => {
+    const res = await api.post(`/tasks/${id}/comments`, { content });
+    return res.data;
+  },
+
+  toggleChecklist: async (id, checklistId, completed) => {
+    const res = await api.put(`/tasks/${id}/checklist`, { checklistId, completed });
+    return res.data;
+  },
+
+  delete: async (id) => {
+    const res = await api.delete(`/tasks/${id}`);
+    return res.data;
+  },
 };
 
-// ─── Message Service ─────────────────────────────────────────────────────────
-export const messageService = {
- getAll: async (channelId) => api.get('/messages', { params: { channelId } }),
- send: async (data) => api.post('/messages', data),
- getConversation: async (userId) => api.get(`/messages/conversation/${userId}`),
- markAsRead: async (id) => api.patch(`/messages/${id}/read`),
+// ─── Chat / Message Service ──────────────────────────────────────────────────
+export const chatService = {
+  getWorkspaceMessages: async (workspaceId) => {
+    const res = await api.get(`/messages/workspace/${workspaceId}`);
+    return res.data;
+  },
+
+  getConversation: async (userId) => {
+    const res = await api.get(`/messages/conversation/${userId}`);
+    return res.data;
+  },
+
+  sendMessage: async (data) => {
+    const res = await api.post('/messages/send', data);
+    return res.data;
+  },
+
+  deleteMessage: async (id) => {
+    const res = await api.delete(`/messages/${id}`);
+    return res.data;
+  },
 };
 
 // ─── Notification Service ────────────────────────────────────────────────────
 export const notificationService = {
- getAll: async () => api.get('/notifications'),
- markAsRead: async (id) => api.patch(`/notifications/${id}/read`),
- markAllAsRead: async () => api.patch('/notifications/read-all'),
- delete: async (id) => api.delete(`/notifications/${id}`),
+  getAll: async () => {
+    const res = await api.get('/notifications');
+    return res.data;
+  },
+
+  markAsRead: async (id) => {
+    const res = await api.put(`/notifications/${id}/read`);
+    return res.data;
+  },
+
+  markAllAsRead: async () => {
+    const res = await api.put('/notifications/read-all');
+    return res.data;
+  },
+
+  delete: async (id) => {
+    const res = await api.delete(`/notifications/${id}`);
+    return res.data;
+  },
 };
 
-// ─── File Service ────────────────────────────────────────────────────────────
-export const fileService = {
- upload: async (formData) => api.post('/files/upload', formData, {
- headers: { 'Content-Type': 'multipart/form-data' }
- }),
- getAll: async (params) => api.get('/files', { params }),
- delete: async (id) => api.delete(`/files/${id}`),
-};
-
-// ─── Dashboard Service ──────────────────────────────────────────────────────
+// ─── Dashboard Service ───────────────────────────────────────────────────────
 export const dashboardService = {
- getStats: async () => api.get('/dashboard/stats'),
- getRecentActivity: async () => api.get('/dashboard/activity'),
+  getStats: async () => {
+    const res = await api.get('/dashboard/stats');
+    return res.data;
+  },
+
+  getRecentActivity: async () => {
+    const res = await api.get('/dashboard/activity');
+    return res.data;
+  },
+};
+
+// ─── User Service ────────────────────────────────────────────────────────────
+export const userService = {
+  getMe: async () => {
+    const res = await api.get('/users/me');
+    return res.data;
+  },
+
+  getAll: async (params) => {
+    const res = await api.get('/users', { params });
+    return res.data;
+  },
+
+  updateProfile: async (id, data) => {
+    const res = await api.put(`/users/${id}`, data);
+    return res.data;
+  },
+
+  changePassword: async (data) => {
+    const res = await api.put('/users/change-password', data);
+    return res.data;
+  },
+
+  updateAvatar: async (avatarUrl) => {
+    const res = await api.put('/users/avatar', { avatarUrl });
+    return res.data;
+  },
+
+  deleteUser: async (id) => {
+    const res = await api.delete(`/users/${id}`);
+    return res.data;
+  },
 };
 
 export default api;
-
