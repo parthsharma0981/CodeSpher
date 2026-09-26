@@ -49,6 +49,11 @@ export const authService = {
     return res.data;
   },
 
+  resendOTP: async (data) => {
+    const res = await api.post('/auth/resend-otp', typeof data === 'string' ? { email: data } : data);
+    return res.data;
+  },
+
   forgotPassword: async (email) => {
     const res = await api.post('/auth/forgot-password', { email });
     return res.data;

@@ -49,13 +49,14 @@ const Register = () => {
 
     setIsLoading(true);
     try {
-      await register({
+      const res = await register({
         name: formData.name,
         email: formData.email,
         password: formData.password,
       });
-      toast.success('Registration successful! Please verify your email.');
-      navigate(ROUTES.VERIFY_OTP, { state: { email: formData.email } });
+      const devOtp = res?.data?.devOtp;
+      toast.success(res?.message || 'Registration successful! Please verify your email.');
+      navigate(ROUTES.VERIFY_OTP, { state: { email: formData.email, devOtp } });
     } catch (error) {
       toast.error(error.response?.data?.message || 'Registration failed. Please try again.');
     } finally {

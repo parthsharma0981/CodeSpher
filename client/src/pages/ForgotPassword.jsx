@@ -28,9 +28,10 @@ const ForgotPassword = () => {
 
     setIsLoading(true);
     try {
-      await authService.forgotPassword(email);
-      toast.success('Reset link / OTP sent to your email!');
-      navigate(ROUTES.VERIFY_OTP, { state: { email, isResetFlow: true } });
+      const res = await authService.forgotPassword(email);
+      const devOtp = res?.data?.devOtp;
+      toast.success(res?.message || 'Reset link / OTP sent to your email!');
+      navigate(ROUTES.VERIFY_OTP, { state: { email, isResetFlow: true, devOtp } });
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to send reset link.');
     } finally {

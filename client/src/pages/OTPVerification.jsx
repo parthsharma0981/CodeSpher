@@ -19,6 +19,7 @@ const OTPVerification = () => {
 
   const email = location.state?.email || 'your email';
   const isResetFlow = location.state?.isResetFlow || false;
+  const [currentDevOtp, setCurrentDevOtp] = useState(location.state?.devOtp || null);
 
   useEffect(() => {
     if (timeLeft > 0) {
@@ -26,6 +27,19 @@ const OTPVerification = () => {
       return () => clearTimeout(timerId);
     }
   }, [timeLeft]);
+
+  const fillOtp = (code) => {
+    if (!code) return;
+    const digits = code.toString().split('').slice(0, 6);
+    const newOtp = [...otp];
+    digits.forEach((d, i) => {
+      newOtp[i] = d;
+    });
+    setOtp(newOtp);
+    if (digits.length === 6) {
+      inputRefs.current[5]?.focus();
+    }
+  };
 
   const handleChange = (e, index) => {
     const value = e.target.value;
@@ -49,11 +63,14 @@ const OTPVerification = () => {
   const handleResend = async () => {
     if (timeLeft > 0) return;
     try {
-      await authService.forgotPassword(email);
+      const res = await authService.resendOTP({ email, isResetFlow });
       setTimeLeft(60);
-      toast.success('New OTP sent successfully!');
+      if (res?.data?.devOtp) {
+        setCurrentDevOtp(res.data.devOtp);
+      }
+      toast.success(res?.message || 'New OTP sent successfully!');
     } catch (err) {
-      toast.error('Failed to resend OTP.');
+      toast.error(err.response?.data?.message || 'Failed to resend OTP.');
     }
   };
 
@@ -68,9 +85,10 @@ const OTPVerification = () => {
     setIsLoading(true);
     try {
       if (isResetFlow) {
-        await authService.verifyOTP({ email, otp: otpValue });
+        const res = await authService.verifyOTP({ email, otp: otpValue, isResetFlow: true });
+        const resetToken = res?.data?.resetToken || otpValue;
         toast.success('OTP verified!');
-        navigate(ROUTES.RESET_PASSWORD, { state: { email, token: otpValue } });
+        navigate(ROUTES.RESET_PASSWORD, { state: { email, token: resetToken } });
       } else {
         await verifyOTP({ email, otp: otpValue });
         toast.success('Account verified successfully! Welcome to CodeSphere.');
@@ -92,15 +110,35 @@ const OTPVerification = () => {
         <ArrowLeft className="w-4 h-4 mr-1" /> Back to login
       </Link>
 
-      <div className="text-center mb-8">
+      <div className="text-center mb-6">
         <h2 className="text-3xl font-bold text-neutral-900 dark:text-white mb-2">Verify OTP</h2>
-        <p className="text-neutral-500">
+        <p className="text-neutral-500 text-sm">
           We've sent a 6-digit code to <br />
           <span className="font-semibold text-neutral-900 dark:text-white">{email}</span>
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-8">
+      {currentDevOtp && (
+        <div className="mb-6 p-3 rounded-xl bg-neutral-100 dark:bg-neutral-800/80 border border-neutral-200 dark:border-neutral-700 text-center">
+          <p className="text-xs text-neutral-500 dark:text-neutral-400 mb-1">
+            Development Mode (SMTP unconfigured)
+          </p>
+          <div className="flex items-center justify-center gap-2">
+            <span className="text-sm font-semibold text-neutral-800 dark:text-neutral-200">
+              Code: <span className="font-mono text-base tracking-widest text-black dark:text-white">{currentDevOtp}</span>
+            </span>
+            <button
+              type="button"
+              onClick={() => fillOtp(currentDevOtp)}
+              className="text-xs font-semibold px-2 py-1 rounded bg-black dark:bg-white text-white dark:text-black hover:opacity-80 transition-opacity"
+            >
+              Autofill
+            </button>
+          </div>
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div className="flex justify-between gap-2 sm:gap-4">
           {otp.map((digit, index) => (
             <input
