@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Outlet, NavLink, Link, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -17,6 +17,7 @@ import {
   Moon,
   Sun,
   ChevronDown,
+  User as UserIcon,
 } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { useTheme } from '../hooks/useTheme';
@@ -30,6 +31,22 @@ const MainLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const notifRef = useRef(null);
+  const userMenuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (notifRef.current && !notifRef.current.contains(e.target)) {
+        setNotificationsOpen(false);
+      }
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
+        setUserMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   const [notifications, setNotifications] = useState([
     {
       id: '1',
@@ -237,7 +254,7 @@ const MainLayout = () => {
             </button>
 
             {/* Notifications Dropdown */}
-            <div className='relative'>
+            <div className='relative' ref={notifRef}>
               <button
                 type='button'
                 onClick={() => {
@@ -257,168 +274,157 @@ const MainLayout = () => {
 
               <AnimatePresence>
                 {notificationsOpen && (
-                  <>
-                    <div
-                      className='fixed inset-0 z-30'
-                      onClick={() => setNotificationsOpen(false)}
-                    />
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                      transition={{ duration: 0.15 }}
-                      className='absolute right-0 mt-2 w-80 sm:w-96 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-2xl z-40 overflow-hidden'
-                    >
-                      <div className='p-4 border-b border-neutral-200 dark:border-neutral-800 flex items-center justify-between'>
-                        <div className='flex items-center gap-2'>
-                          <h3 className='font-semibold text-sm text-neutral-900 dark:text-white'>
-                            Notifications
-                          </h3>
-                          {unreadCount > 0 && (
-                            <span className='bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 text-xs px-2 py-0.5 rounded-full font-medium'>
-                              {unreadCount} new
-                            </span>
-                          )}
-                        </div>
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                    transition={{ duration: 0.15 }}
+                    className='absolute right-0 mt-2 w-80 sm:w-96 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-2xl z-50 overflow-hidden'
+                  >
+                    <div className='p-4 border-b border-neutral-200 dark:border-neutral-800 flex items-center justify-between'>
+                      <div className='flex items-center gap-2'>
+                        <h3 className='font-semibold text-sm text-neutral-900 dark:text-white'>
+                          Notifications
+                        </h3>
                         {unreadCount > 0 && (
-                          <button
-                            onClick={handleMarkAllRead}
-                            type='button'
-                            className='text-xs text-neutral-500 hover:text-black dark:hover:text-white transition-colors cursor-pointer'
-                          >
-                            Mark all read
-                          </button>
+                          <span className='bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 text-xs px-2 py-0.5 rounded-full font-medium'>
+                            {unreadCount} new
+                          </span>
                         )}
                       </div>
-
-                      <div className='max-h-72 overflow-y-auto divide-y divide-neutral-100 dark:divide-neutral-800/60 custom-scrollbar'>
-                        {notifications.length > 0 ? (
-                          notifications.slice(0, 5).map((n) => (
-                            <div
-                              key={n.id}
-                              onClick={() => {
-                                handleNotificationClick(n);
-                                setNotificationsOpen(false);
-                              }}
-                              className={`p-3.5 hover:bg-neutral-50 dark:hover:bg-neutral-800/50 cursor-pointer transition-colors flex items-start gap-3 ${
-                                !n.read ? 'bg-neutral-50/70 dark:bg-neutral-800/20' : ''
-                              }`}
-                            >
-                              <div
-                                className='w-2 h-2 rounded-full mt-1.5 flex-shrink-0 bg-neutral-900 dark:bg-white'
-                                style={{ opacity: n.read ? 0.2 : 1 }}
-                              />
-                              <div className='flex-1 min-w-0'>
-                                <p
-                                  className={`text-xs font-semibold ${
-                                    !n.read
-                                      ? 'text-black dark:text-white'
-                                      : 'text-neutral-500'
-                                  }`}
-                                >
-                                  {n.title}
-                                </p>
-                                <p className='text-xs text-neutral-400 truncate mt-0.5'>
-                                  {n.description}
-                                </p>
-                                <span className='text-[10px] text-neutral-400 mt-1 block'>
-                                  {n.time}
-                                </span>
-                              </div>
-                            </div>
-                          ))
-                        ) : (
-                          <div className='p-6 text-center text-xs text-neutral-400'>
-                            No notifications yet
-                          </div>
-                        )}
-                      </div>
-
-                      <div className='p-2.5 border-t border-neutral-200 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-950/50 text-center'>
-                        <Link
-                          to={ROUTES.NOTIFICATIONS}
-                          onClick={() => setNotificationsOpen(false)}
-                          className='text-xs font-medium text-black dark:text-white hover:underline inline-flex items-center gap-1'
+                      {unreadCount > 0 && (
+                        <button
+                          onClick={handleMarkAllRead}
+                          type='button'
+                          className='text-xs text-neutral-500 hover:text-black dark:hover:text-white transition-colors cursor-pointer'
                         >
-                          View all notifications
-                        </Link>
-                      </div>
-                    </motion.div>
-                  </>
+                          Mark all read
+                        </button>
+                      )}
+                    </div>
+
+                    <div className='max-h-72 overflow-y-auto divide-y divide-neutral-100 dark:divide-neutral-800/60 custom-scrollbar'>
+                      {notifications.length > 0 ? (
+                        notifications.slice(0, 5).map((n) => (
+                          <div
+                            key={n.id}
+                            onClick={() => {
+                              handleNotificationClick(n);
+                              setNotificationsOpen(false);
+                            }}
+                            className={`p-3.5 hover:bg-neutral-50 dark:hover:bg-neutral-800/50 cursor-pointer transition-colors flex items-start gap-3 ${
+                              !n.read ? 'bg-neutral-50/70 dark:bg-neutral-800/20' : ''
+                            }`}
+                          >
+                            <div
+                              className='w-2 h-2 rounded-full mt-1.5 flex-shrink-0 bg-neutral-900 dark:bg-white'
+                              style={{ opacity: n.read ? 0.2 : 1 }}
+                            />
+                            <div className='flex-1 min-w-0'>
+                              <p
+                                className={`text-xs font-semibold ${
+                                  !n.read
+                                    ? 'text-black dark:text-white'
+                                    : 'text-neutral-500'
+                                }`}
+                              >
+                                {n.title}
+                              </p>
+                              <p className='text-xs text-neutral-400 truncate mt-0.5'>
+                                {n.description}
+                              </p>
+                              <span className='text-[10px] text-neutral-400 mt-1 block'>
+                                {n.time}
+                              </span>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <div className='p-6 text-center text-xs text-neutral-400'>
+                          No notifications yet
+                        </div>
+                      )}
+                    </div>
+
+                    <div className='p-2.5 border-t border-neutral-200 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-950/50 text-center'>
+                      <Link
+                        to={ROUTES.NOTIFICATIONS}
+                        onClick={() => setNotificationsOpen(false)}
+                        className='text-xs font-medium text-black dark:text-white hover:underline inline-flex items-center gap-1'
+                      >
+                        View all notifications
+                      </Link>
+                    </div>
+                  </motion.div>
                 )}
               </AnimatePresence>
             </div>
 
             {/* User Profile Menu */}
-            <div className='relative'>
+            <div className='relative' ref={userMenuRef}>
               <button
                 type='button'
                 onClick={() => {
                   setUserMenuOpen((prev) => !prev);
                   setNotificationsOpen(false);
                 }}
-                className='flex items-center gap-2 pl-2 border-l border-neutral-200 dark:border-neutral-700 ml-2 cursor-pointer'
+                className='flex items-center gap-2 pl-2 border-l border-neutral-200 dark:border-neutral-700 ml-2 cursor-pointer p-1 rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-800/60 transition-colors'
+                title='Account menu'
               >
-                <Avatar name={user?.name} size='sm' />
+                <Avatar name={user?.name || 'User'} size='sm' />
                 <ChevronDown className='w-4 h-4 text-neutral-500 hidden sm:block' />
               </button>
 
               <AnimatePresence>
                 {userMenuOpen && (
-                  <>
-                    <div
-                      className='fixed inset-0 z-30'
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95, y: 10 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                    transition={{ duration: 0.15 }}
+                    className='absolute right-0 mt-2 w-56 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-2xl z-50 overflow-hidden py-1.5'
+                  >
+                    <div className='px-4 py-2.5 border-b border-neutral-100 dark:border-neutral-800'>
+                      <p className='text-xs font-bold text-black dark:text-white truncate'>
+                        {user?.name || 'Developer'}
+                      </p>
+                      <p className='text-[11px] text-neutral-400 truncate mt-0.5'>
+                        {user?.email || 'user@codesphere.io'}
+                      </p>
+                    </div>
+                    <Link
+                      to={ROUTES.PROFILE}
                       onClick={() => setUserMenuOpen(false)}
-                    />
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                      animate={{ opacity: 1, scale: 1, y: 0 }}
-                      exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                      transition={{ duration: 0.15 }}
-                      className='absolute right-0 mt-2 w-52 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-xl z-40 overflow-hidden py-1.5'
+                      className='flex items-center px-4 py-2 text-xs text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors'
                     >
-                      <div className='px-4 py-2 border-b border-neutral-100 dark:border-neutral-800'>
-                        <p className='text-xs font-semibold text-black dark:text-white truncate'>
-                          {user?.name || 'Developer'}
-                        </p>
-                        <p className='text-[11px] text-neutral-400 truncate'>
-                          {user?.email || 'user@codesphere.io'}
-                        </p>
-                      </div>
-                      <Link
-                        to={ROUTES.PROFILE}
-                        onClick={() => setUserMenuOpen(false)}
-                        className='flex items-center px-4 py-2 text-xs text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors'
-                      >
-                        My Profile
-                      </Link>
-                      <Link
-                        to={ROUTES.SETTINGS}
-                        onClick={() => setUserMenuOpen(false)}
-                        className='flex items-center px-4 py-2 text-xs text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors'
-                      >
-                        Account Settings
-                      </Link>
-                      <Link
-                        to={ROUTES.NOTIFICATIONS}
-                        onClick={() => setUserMenuOpen(false)}
-                        className='flex items-center px-4 py-2 text-xs text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors'
-                      >
-                        Notifications ({unreadCount})
-                      </Link>
-                      <div className='my-1 border-t border-neutral-100 dark:border-neutral-800' />
-                      <button
-                        type='button'
-                        onClick={() => {
-                          setUserMenuOpen(false);
-                          handleLogout();
-                        }}
-                        className='w-full text-left flex items-center px-4 py-2 text-xs text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer'
-                      >
-                        Sign Out
-                      </button>
-                    </motion.div>
-                  </>
+                      My Profile
+                    </Link>
+                    <Link
+                      to={ROUTES.SETTINGS}
+                      onClick={() => setUserMenuOpen(false)}
+                      className='flex items-center px-4 py-2 text-xs text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors'
+                    >
+                      Account Settings
+                    </Link>
+                    <Link
+                      to={ROUTES.NOTIFICATIONS}
+                      onClick={() => setUserMenuOpen(false)}
+                      className='flex items-center px-4 py-2 text-xs text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors'
+                    >
+                      Notifications ({unreadCount})
+                    </Link>
+                    <div className='my-1 border-t border-neutral-100 dark:border-neutral-800' />
+                    <button
+                      type='button'
+                      onClick={() => {
+                        setUserMenuOpen(false);
+                        handleLogout();
+                      }}
+                      className='w-full text-left flex items-center px-4 py-2 text-xs text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors cursor-pointer font-medium'
+                    >
+                      Sign Out
+                    </button>
+                  </motion.div>
                 )}
               </AnimatePresence>
             </div>

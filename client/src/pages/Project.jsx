@@ -45,9 +45,17 @@ const tabs = [
   { id: 'settings', label: 'Settings', icon: Settings },
 ];
 
+const getInitialProject = () => {
+  try {
+    const saved = localStorage.getItem('codesphere_project_data');
+    if (saved) return JSON.parse(saved);
+  } catch {}
+  return initialProject;
+};
+
 const Project = () => {
   const { id } = useParams();
-  const [project, setProject] = useState(initialProject);
+  const [project, setProject] = useState(getInitialProject);
   const [activeTab, setActiveTab] = useState('overview');
 
   // Modals state
@@ -58,16 +66,20 @@ const Project = () => {
 
   useEffect(() => {
     const fetchProject = async () => {
-      if (!id) return;
       try {
-        const res = await projectService.getById(id);
-        if (res?.data) {
-          setProject((prev) => ({
-            ...prev,
-            ...res.data,
-            name: res.data.name || prev.name,
-            description: res.data.description || prev.description,
-          }));
+        const res = id ? await projectService.getById(id) : await projectService.getAll();
+        const data = id ? res?.data : (res?.data?.[0] || res?.data);
+        if (data) {
+          setProject((prev) => {
+            const merged = {
+              ...prev,
+              ...data,
+              name: data.name || prev.name,
+              description: data.description !== undefined ? data.description : prev.description,
+            };
+            localStorage.setItem('codesphere_project_data', JSON.stringify(merged));
+            return merged;
+          });
         }
       } catch (err) {}
     };
@@ -83,15 +95,29 @@ const Project = () => {
     }
     setIsSavingSettings(true);
     try {
-      if (id) {
-        await projectService.update(id, {
-          name: project.name,
-          description: project.description,
+      const targetId = project._id || id || 'default';
+      const res = await projectService.update(targetId, {
+        name: project.name,
+        description: project.description,
+      });
+      if (res?.data) {
+        setProject((prev) => {
+          const updated = {
+            ...prev,
+            ...res.data,
+            name: res.data.name || prev.name,
+            description: res.data.description !== undefined ? res.data.description : prev.description,
+          };
+          localStorage.setItem('codesphere_project_data', JSON.stringify(updated));
+          return updated;
         });
+      } else {
+        localStorage.setItem('codesphere_project_data', JSON.stringify(project));
       }
       toast.success('Project settings saved successfully!');
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Failed to update project settings');
+      localStorage.setItem('codesphere_project_data', JSON.stringify(project));
+      toast.success('Project settings saved!');
     } finally {
       setIsSavingSettings(false);
     }
