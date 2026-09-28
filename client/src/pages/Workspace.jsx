@@ -102,7 +102,7 @@ const tabs = [
 ];
 
 const Workspace = ({ workspaceId }) => {
-  const [workspace, setWorkspace] = useState(initialWorkspace);
+  const [workspace, setWorkspace] = useState({ ...initialWorkspace, _id: workspaceId || '' });
   const [activeTab, setActiveTab] = useState('projects');
 
   // Modals state
@@ -110,26 +110,42 @@ const Workspace = ({ workspaceId }) => {
   const [showMemberModal, setShowMemberModal] = useState(false);
   const [showFileModal, setShowFileModal] = useState(false);
   const [isUploadingFile, setIsUploadingFile] = useState(false);
+  const [isSavingSettings, setIsSavingSettings] = useState(false);
 
   useEffect(() => {
     const fetchWorkspaceData = async () => {
       try {
-        if (workspaceId) {
-          const res = await workspaceService.getById(workspaceId);
+        let currentWsId = workspaceId;
+        if (!currentWsId) {
+          const allRes = await workspaceService.getAll();
+          if (allRes?.data && allRes.data.length > 0) {
+            const current = allRes.data[0];
+            currentWsId = current._id;
+            setWorkspace((prev) => ({
+              ...prev,
+              _id: current._id,
+              name: current.name || prev.name,
+              description: current.description !== undefined ? current.description : prev.description,
+            }));
+          }
+        } else {
+          const res = await workspaceService.getById(currentWsId);
           if (res?.data) {
             setWorkspace((prev) => ({
               ...prev,
+              _id: res.data._id,
               name: res.data.name || prev.name,
-              description: res.data.description || prev.description,
+              description: res.data.description !== undefined ? res.data.description : prev.description,
             }));
           }
         }
-        const projRes = await projectService.getAll(workspaceId);
+
+        const projRes = await projectService.getAll(currentWsId);
         if (projRes?.data && projRes.data.length > 0) {
           setWorkspace((prev) => ({ ...prev, projects: projRes.data }));
         }
 
-        const filesRes = await fileService.getAll({ workspaceId });
+        const filesRes = await fileService.getAll({ workspaceId: currentWsId });
         if (filesRes?.data && filesRes.data.length > 0) {
           const apiFiles = filesRes.data.map((f) => ({
             id: f._id,
@@ -244,6 +260,52 @@ const Workspace = ({ workspaceId }) => {
     toast.success('File added!');
     setShowFileModal(false);
     setIsUploadingFile(false);
+  };
+
+  const handleSaveSettings = async (e) => {
+    e.preventDefault();
+    if (!workspace.name.trim()) {
+      toast.error('Workspace name cannot be empty');
+      return;
+    }
+    setIsSavingSettings(true);
+    try {
+      if (workspace._id) {
+        const res = await workspaceService.update(workspace._id, {
+          name: workspace.name,
+          description: workspace.description,
+        });
+        if (res?.data) {
+          setWorkspace((prev) => ({
+            ...prev,
+            name: res.data.name || prev.name,
+            description: res.data.description !== undefined ? res.data.description : prev.description,
+          }));
+          toast.success('Workspace settings updated successfully!');
+          setIsSavingSettings(false);
+          return;
+        }
+      } else {
+        const res = await workspaceService.create({
+          name: workspace.name,
+          description: workspace.description,
+        });
+        if (res?.data) {
+          setWorkspace((prev) => ({
+            ...prev,
+            _id: res.data._id,
+            name: res.data.name,
+            description: res.data.description,
+          }));
+          toast.success('Workspace created and settings saved!');
+          setIsSavingSettings(false);
+          return;
+        }
+      }
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to save workspace settings.');
+    }
+    setIsSavingSettings(false);
   };
 
   return (
@@ -392,10 +454,7 @@ const Workspace = ({ workspaceId }) => {
                 Workspace Settings
               </h2>
               <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  toast.success('Workspace updated successfully!');
-                }}
+                onSubmit={handleSaveSettings}
                 className="space-y-4"
               >
                 <div>
@@ -427,7 +486,7 @@ const Workspace = ({ workspaceId }) => {
                 </div>
 
                 <div className="pt-2">
-                  <Button type="submit">Save Changes</Button>
+                  <Button type="submit" isLoading={isSavingSettings}>Save Changes</Button>
                 </div>
               </form>
             </div>

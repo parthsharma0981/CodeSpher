@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trello, Clock, Users, Folder, Settings, Activity } from 'lucide-react';
@@ -6,7 +6,7 @@ import Button from '../components/common/Button';
 import MemberCard from '../components/workspace/MemberCard';
 import FileCard from '../components/workspace/FileCard';
 import ActivityFeed from '../components/dashboard/ActivityFeed';
-import { fileService } from '../services/api';
+import { fileService, projectService } from '../services/api';
 import toast from 'react-hot-toast';
 
 // Modals
@@ -54,6 +54,48 @@ const Project = () => {
   const [showMemberModal, setShowMemberModal] = useState(false);
   const [showFileModal, setShowFileModal] = useState(false);
   const [isUploadingFile, setIsUploadingFile] = useState(false);
+  const [isSavingSettings, setIsSavingSettings] = useState(false);
+
+  useEffect(() => {
+    const fetchProject = async () => {
+      if (!id) return;
+      try {
+        const res = await projectService.getById(id);
+        if (res?.data) {
+          setProject((prev) => ({
+            ...prev,
+            ...res.data,
+            name: res.data.name || prev.name,
+            description: res.data.description || prev.description,
+          }));
+        }
+      } catch (err) {}
+    };
+
+    fetchProject();
+  }, [id]);
+
+  const handleSaveSettings = async (e) => {
+    e?.preventDefault();
+    if (!project.name?.trim()) {
+      toast.error('Project name cannot be empty');
+      return;
+    }
+    setIsSavingSettings(true);
+    try {
+      if (id) {
+        await projectService.update(id, {
+          name: project.name,
+          description: project.description,
+        });
+      }
+      toast.success('Project settings saved successfully!');
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to update project settings');
+    } finally {
+      setIsSavingSettings(false);
+    }
+  };
 
   useEffect(() => {
     const fetchFiles = async () => {
@@ -292,27 +334,29 @@ const Project = () => {
             <div className="max-w-2xl">
               <h2 className="text-xl font-bold text-black dark:text-white mb-6">Project Settings</h2>
               
-              <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 mb-8 space-y-6">
+              <form onSubmit={handleSaveSettings} className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 mb-8 space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-neutral-300 mb-2">Project Name</label>
                   <input 
                     type="text" 
-                    defaultValue={project.name}
-                    className="w-full bg-neutral-900/50 border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-shadow"
+                    value={project.name || ''}
+                    onChange={(e) => setProject({ ...project, name: e.target.value })}
+                    className="w-full bg-neutral-50 dark:bg-neutral-950 border border-neutral-300 dark:border-neutral-700 rounded-xl px-4 py-3 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-neutral-400 dark:focus:ring-neutral-600 transition-shadow"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-neutral-300 mb-2">Description</label>
                   <textarea 
-                    defaultValue={project.description}
+                    value={project.description || ''}
+                    onChange={(e) => setProject({ ...project, description: e.target.value })}
                     rows={4}
-                    className="w-full bg-neutral-900/50 border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 py-3 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-shadow resize-none"
+                    className="w-full bg-neutral-50 dark:bg-neutral-950 border border-neutral-300 dark:border-neutral-700 rounded-xl px-4 py-3 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-neutral-400 dark:focus:ring-neutral-600 transition-shadow resize-none"
                   />
                 </div>
                 <div className="flex justify-end">
-                  <Button variant="primary">Save Changes</Button>
+                  <Button type="submit" variant="primary" isLoading={isSavingSettings}>Save Changes</Button>
                 </div>
-              </div>
+              </form>
             </div>
           )}
         </motion.div>

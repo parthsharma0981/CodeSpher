@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { useDroppable } from '@dnd-kit/core';
 import {
   SortableContext,
@@ -32,7 +32,11 @@ const KanbanColumn = ({ column, tasks, onTaskClick, onAddTask }) => {
           </span>
         </div>
         <button
-          onClick={() => onAddTask && onAddTask(column.id)}
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onAddTask && onAddTask(column.id);
+          }}
           title={`Add task to ${column.title}`}
           className="text-neutral-500 hover:text-black dark:hover:text-white p-1 hover:bg-neutral-200 dark:hover:bg-neutral-800 rounded transition-colors cursor-pointer"
         >
@@ -58,7 +62,11 @@ const KanbanColumn = ({ column, tasks, onTaskClick, onAddTask }) => {
         </SortableContext>
 
         <button
-          onClick={() => onAddTask && onAddTask(column.id)}
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            onAddTask && onAddTask(column.id);
+          }}
           className="mt-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl border border-dashed border-neutral-300 dark:border-neutral-700 text-neutral-500 hover:text-black dark:hover:text-white hover:border-neutral-400 dark:hover:border-neutral-600 hover:bg-white/40 dark:hover:bg-white/5 text-xs font-medium transition-all cursor-pointer"
         >
           <Plus className="w-3.5 h-3.5" />
