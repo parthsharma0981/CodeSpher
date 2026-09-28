@@ -67,6 +67,20 @@ export const AuthProvider = ({ children }) => {
     return response;
   };
 
+  const loginWithToken = async (token) => {
+    localStorage.setItem('token', token);
+    try {
+      const profile = await userService.getMe();
+      if (profile?.data) {
+        setUser(profile.data);
+        localStorage.setItem('user', JSON.stringify(profile.data));
+        return profile.data;
+      }
+    } catch (err) {
+      console.error('Failed to fetch user profile with OAuth token:', err);
+    }
+  };
+
   const updateUserState = (updatedUser) => {
     setUser(updatedUser);
     localStorage.setItem('user', JSON.stringify(updatedUser));
@@ -85,6 +99,7 @@ export const AuthProvider = ({ children }) => {
         user,
         loading,
         login,
+        loginWithToken,
         register,
         verifyOTP,
         updateUserState,

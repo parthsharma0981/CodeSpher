@@ -1,4 +1,6 @@
 export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+export const GOOGLE_AUTH_URL = `${API_URL}/auth/google`;
+export const GITHUB_AUTH_URL = `${API_URL}/auth/github`;
 
 export const TASK_STATUS = {
  BACKLOG: 'backlog',

@@ -27,6 +27,7 @@ import Profile from './pages/Profile';
 import AdminPanel from './pages/AdminPanel';
 import Notifications from './pages/Notifications';
 import NotFound from './pages/NotFound';
+import OAuthCallback from './pages/OAuthCallback';
 
 // Components
 import LoadingSpinner from './components/common/LoadingSpinner';
@@ -69,6 +70,9 @@ function App() {
  <Route path={ROUTES.VERIFY_OTP} element={<OTPVerification />} />
  <Route path={ROUTES.RESET_PASSWORD} element={<ResetPassword />} />
  </Route>
+
+ {/* OAuth Callback */}
+ <Route path="/auth/callback" element={<OAuthCallback />} />
 
  {/* Protected Dashboard Routes */}
  <Route
