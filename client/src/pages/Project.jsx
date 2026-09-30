@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trello, Clock, Users, Folder, Settings, Activity } from 'lucide-react';
+import { Trello, Clock, Users, Folder, Settings, Activity, Calendar } from 'lucide-react';
 import Button from '../components/common/Button';
 import MemberCard from '../components/workspace/MemberCard';
 import FileCard from '../components/workspace/FileCard';
@@ -99,6 +99,7 @@ const Project = () => {
       const res = await projectService.update(targetId, {
         name: project.name,
         description: project.description,
+        deadline: project.deadline,
       });
       if (res?.data) {
         setProject((prev) => {
@@ -107,6 +108,7 @@ const Project = () => {
             ...res.data,
             name: res.data.name || prev.name,
             description: res.data.description !== undefined ? res.data.description : prev.description,
+            deadline: res.data.deadline !== undefined ? res.data.deadline : prev.deadline,
           };
           localStorage.setItem('codesphere_project_data', JSON.stringify(updated));
           return updated;
@@ -377,6 +379,18 @@ const Project = () => {
                     onChange={(e) => setProject({ ...project, description: e.target.value })}
                     rows={4}
                     className="w-full bg-neutral-50 dark:bg-neutral-950 border border-neutral-300 dark:border-neutral-700 rounded-xl px-4 py-3 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-neutral-400 dark:focus:ring-neutral-600 transition-shadow resize-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-semibold text-neutral-600 dark:text-neutral-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                    <Calendar className="w-3.5 h-3.5" /> Deadline
+                  </label>
+                  <input 
+                    type="text" 
+                    value={project.deadline || ''}
+                    onChange={(e) => setProject({ ...project, deadline: e.target.value })}
+                    placeholder="e.g. Oct 24, 2024"
+                    className="w-full bg-neutral-50 dark:bg-neutral-950 border border-neutral-300 dark:border-neutral-700 rounded-xl px-4 py-3 text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-neutral-400 dark:focus:ring-neutral-600 transition-shadow"
                   />
                 </div>
                 <div className="flex justify-end">
