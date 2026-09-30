@@ -23,7 +23,7 @@
 
 **CodeSphere** is a comprehensive full-stack developer collaboration platform that brings together the best features of **GitHub**, **Trello**, **Discord**, and **Notion** into one unified workspace. It empowers teams to plan projects, manage tasks with Kanban boards, communicate in real-time, share files, and track productivity — all from a single, beautifully designed interface.
 
-Built as a production-grade MERN stack application with real-time WebSocket communication, role-based access control, and a premium glassmorphism UI.
+Built as a production-grade MERN stack application with real-time WebSocket communication, role-based access control, and a premium glassmorphism UI/UX.
 
 ---
 
