@@ -67,7 +67,9 @@ export const authService = {
   logout: async () => {
     try {
       await api.post('/auth/logout');
-    } catch {}
+    } catch (err) {
+      // Ignore network errors on logout
+    }
     localStorage.removeItem('token');
     localStorage.removeItem('user');
   },
