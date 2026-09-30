@@ -98,7 +98,7 @@ const CreateProjectModal = ({ isOpen, onClose, onSubmit }) => {
 
             <div className='grid grid-cols-2 gap-4'>
               <div>
-                <label className='block text-xs font-semibold text-neutral-600 dark:text-neutral-400 uppercase tracking-wider mb-2 flex items-center gap-1'>
+                <label className=' text-xs font-semibold text-neutral-600 dark:text-neutral-400 uppercase tracking-wider mb-2 flex items-center gap-1'>
                   <Calendar className='w-3.5 h-3.5' /> Deadline
                 </label>
                 <input

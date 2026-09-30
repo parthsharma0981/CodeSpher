@@ -6,6 +6,7 @@ import ConversationItem from '../components/chat/ConversationItem';
 import ChannelItem from '../components/chat/ChannelItem';
 import { useAuth } from '../hooks/useAuth';
 import useSocket from '../hooks/useSocket';
+import { chatService } from '../services/api';
 import { AnimatePresence, motion } from 'framer-motion';
 
 const INITIAL_CHANNELS = [
@@ -271,6 +272,17 @@ const Chat = () => {
         receiverId: activeDm,
         senderName: user?.name || 'You',
       });
+    }
+
+    try {
+      chatService.sendMessage({
+        content: text,
+        receiverId: activeDm ? String(activeDm) : undefined,
+        type: attachment ? (attachment.type?.includes('image') ? 'image' : 'file') : 'text',
+        fileUrl: attachment?.url,
+      }).catch(() => {});
+    } catch (err) {
+      // Ignore network errors
     }
   };
 
